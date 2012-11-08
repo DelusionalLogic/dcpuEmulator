@@ -9,6 +9,8 @@ namespace dcpuEmulator
 {
     class Program
     {
+        private static Computer computer;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -25,6 +27,7 @@ namespace dcpuEmulator
         {
             AdvConsole.Log("Setting dialog done");
             AdvConsole.Log(string.Format("Binary path: {0}", ((SettingsForm)sender).filePath));
+            //TODO: Add computer init 
         }
     }
 }
