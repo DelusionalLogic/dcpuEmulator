@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dcpuEmulator", "dcpuEmulator\dcpuEmulator.csproj", "{BE93838D-7AE1-4B6F-96F9-D74B65C6A26D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInterface", "PluginInterface\PluginInterface.csproj", "{44B10CA0-DEDE-491F-8963-4F58F172C871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{BE93838D-7AE1-4B6F-96F9-D74B65C6A26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE93838D-7AE1-4B6F-96F9-D74B65C6A26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE93838D-7AE1-4B6F-96F9-D74B65C6A26D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

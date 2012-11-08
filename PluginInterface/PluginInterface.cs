@@ -12,6 +12,11 @@ namespace PluginInterface
         void writeMem(int address, ushort value);
     }
 
+    public interface ICpu : IPlugin
+    {
+        void tick();
+    }
+
     public interface IPlugin
     {
         IPluginHost Host { get; set; }
