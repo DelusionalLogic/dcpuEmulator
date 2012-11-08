@@ -9,14 +9,22 @@ namespace dcpuEmulator
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
-            AdvConsole.Log("Opening MainForm"); 
+            AdvConsole.Log("Opening SettingsForm"); 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.setupComplete += setupComplete;
+            Application.Run(settingsForm);
             AdvConsole.ReadLine();
+        }
+
+        public static void setupComplete(object sender, EventArgs e)
+        {
+            AdvConsole.Log("Setting dialog done");
+            AdvConsole.Log(string.Format("Binary path: {0}", ((SettingsForm)sender).filePath));
         }
     }
 }
