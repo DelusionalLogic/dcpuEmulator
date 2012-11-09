@@ -9,7 +9,7 @@ using PluginInterface;
 
 namespace dcpuEmulator
 {
-    class Computer
+    public class Computer : IPluginHost
     {
         private readonly IScreen screen;
         private readonly ICpu cpu;
@@ -39,6 +39,16 @@ namespace dcpuEmulator
                     }
                 }
             }
+        }
+
+        public ushort readMem(int address)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void writeMem(int address, ushort value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

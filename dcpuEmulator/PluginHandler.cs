@@ -11,7 +11,12 @@ namespace dcpuEmulator
 {
     public class PluginHandler
     {
-        readonly PluginService pluginHandler = new PluginService();
+        readonly Computer computer;
+
+        public PluginHandler(Computer computer)
+        {
+            this.computer = computer;
+        }
 
         public List<T> loadPluginsInFolder<T>(string path)
         {
@@ -44,7 +49,7 @@ namespace dcpuEmulator
                     {
                         var plugin = (T) Activator.CreateInstance(assembly.GetType(type.ToString()));
 
-                        ((IPlugin) plugin).Host = pluginHandler;
+                        ((IPlugin) plugin).Host = computer;
                         ((IPlugin) plugin).initialize();
 
                         return plugin;

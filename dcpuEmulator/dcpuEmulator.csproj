@@ -46,7 +46,6 @@
     <Compile Include="AdvConsole.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="PluginHandler.cs" />
-    <Compile Include="PluginService.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

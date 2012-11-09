@@ -16,7 +16,7 @@ namespace dcpuEmulator
         [STAThread]
         static void Main(string[] args)
         {
-            pluginHandler = new PluginHandler();
+            pluginHandler = new PluginHandler(computer);
 
             AdvConsole.Log("Opening SettingsForm"); 
             Application.EnableVisualStyles();
@@ -29,9 +29,13 @@ namespace dcpuEmulator
 
         public static void setupComplete(object sender, EventArgs e)
         {
-            AdvConsole.Log("Setting dialog done");
-            AdvConsole.Log(string.Format("Binary path: {0}", ((SettingsForm)sender).filePath));
-            //TODO: Add computer init
+            SettingsForm settings = (SettingsForm) sender;
+            AdvConsole.Log("Setting dialog complete");
+            AdvConsole.Log(string.Format("Binary path: {0}", settings.filePath));
+            AdvConsole.Log(string.Format("Screen Loaded: {0}", settings.selectedScreen.Name));
+            AdvConsole.Log(string.Format("Cpu Loaded: {0}", settings.selectedCpu.Name));
+            AdvConsole.Log(string.Format("Ram Loaded: {0}", settings.selectedRam.Name));
+            computer = new Computer(settings.selectedScreen, settings.selectedCpu, settings.selectedRam);
         }
     }
 }

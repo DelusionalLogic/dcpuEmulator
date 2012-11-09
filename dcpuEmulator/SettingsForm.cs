@@ -25,9 +25,18 @@ namespace dcpuEmulator
         private PluginHandler pluginHandler;
 
         public string filePath = "";
-        public IScreen selectedScreen;
-        public ICpu selectedCpu;
-        public IRam selectedRam;
+        public IScreen selectedScreen
+        {
+            get { return (IScreen)screenBox.SelectedItem; }
+        }
+        public ICpu selectedCpu
+        {
+            get { return (ICpu)cpuBox.SelectedItem; }
+        }
+        public IRam selectedRam
+        {
+            get { return (IRam)ramBox.SelectedItem; }
+        }
 
         public SettingsForm(PluginHandler pluginHandler)
         {

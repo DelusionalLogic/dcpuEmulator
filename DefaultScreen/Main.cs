@@ -25,7 +25,7 @@ namespace DefaultScreen
 
         public string Name
         {
-            get { return "DefaultScreen"; }
+            get { return "Default Screen"; }
         }
         public string Description
         {
