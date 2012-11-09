@@ -22,9 +22,10 @@ namespace dcpuEmulator
             if (handler != null) handler(this, e);
         }
 
-        private PluginHandler pluginHandler;
+        private readonly PluginHandler pluginHandler;
 
         public string filePath = "";
+
         public IScreen selectedScreen
         {
             get { return screenPlugins[screenBox.SelectedIndex]; }
@@ -66,14 +67,17 @@ namespace dcpuEmulator
             {
                 screenBox.Items.Add(string.Format(listSetup, screen.Name, screen.Author, screen.Version));
             }
+            screenBox.SelectedIndex = 0;
             foreach (var cpu in cpus)
             {
                 cpuBox.Items.Add(string.Format(listSetup, cpu.Name, cpu.Author, cpu.Version));
             }
+            cpuBox.SelectedIndex = 0;
             foreach (var ram in rams)
             {
                 ramBox.Items.Add(string.Format(listSetup, ram.Name, ram.Author, ram.Version));
             }
+            ramBox.SelectedIndex = 0;
         }
 
         private void browseBut_Click(object sender, EventArgs e)
@@ -89,6 +93,21 @@ namespace dcpuEmulator
         {
             onSetupComplete(new EventArgs());
             this.Close();
+        }
+
+        private void screenBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            configScreenBut.Enabled = selectedScreen.configPossible;
+        }
+
+        private void cpuBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            configCpuBut.Enabled = selectedCpu.configPossible;
+        }
+
+        private void ramBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            configRamBut.Enabled = selectedRam.configPossible;
         }
     }
 }

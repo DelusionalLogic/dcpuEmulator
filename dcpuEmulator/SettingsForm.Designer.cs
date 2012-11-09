@@ -38,6 +38,9 @@
             this.cpuBox = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ramBox = new System.Windows.Forms.ComboBox();
+            this.configScreenBut = new System.Windows.Forms.Button();
+            this.configCpuBut = new System.Windows.Forms.Button();
+            this.configRamBut = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -64,6 +67,7 @@
             // 
             this.openBinDia.FileName = "program.bin";
             this.openBinDia.Filter = "Binary|*.bin";
+            this.openBinDia.Title = "Please select binary";
             // 
             // okBut
             // 
@@ -77,14 +81,17 @@
             // 
             // screenBox
             // 
+            this.screenBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.screenBox.FormattingEnabled = true;
             this.screenBox.Location = new System.Drawing.Point(6, 19);
             this.screenBox.Name = "screenBox";
             this.screenBox.Size = new System.Drawing.Size(401, 21);
             this.screenBox.TabIndex = 4;
+            this.screenBox.SelectedIndexChanged += new System.EventHandler(this.screenBox_SelectedIndexChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.configScreenBut);
             this.groupBox1.Controls.Add(this.screenBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 62);
             this.groupBox1.Name = "groupBox1";
@@ -95,6 +102,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.configCpuBut);
             this.groupBox2.Controls.Add(this.cpuBox);
             this.groupBox2.Location = new System.Drawing.Point(12, 117);
             this.groupBox2.Name = "groupBox2";
@@ -105,14 +113,17 @@
             // 
             // cpuBox
             // 
+            this.cpuBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cpuBox.FormattingEnabled = true;
             this.cpuBox.Location = new System.Drawing.Point(6, 19);
             this.cpuBox.Name = "cpuBox";
             this.cpuBox.Size = new System.Drawing.Size(401, 21);
             this.cpuBox.TabIndex = 4;
+            this.cpuBox.SelectedIndexChanged += new System.EventHandler(this.cpuBox_SelectedIndexChanged);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.configRamBut);
             this.groupBox3.Controls.Add(this.ramBox);
             this.groupBox3.Location = new System.Drawing.Point(12, 172);
             this.groupBox3.Name = "groupBox3";
@@ -123,11 +134,40 @@
             // 
             // ramBox
             // 
+            this.ramBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ramBox.FormattingEnabled = true;
             this.ramBox.Location = new System.Drawing.Point(6, 19);
             this.ramBox.Name = "ramBox";
             this.ramBox.Size = new System.Drawing.Size(401, 21);
             this.ramBox.TabIndex = 4;
+            this.ramBox.SelectedIndexChanged += new System.EventHandler(this.ramBox_SelectedIndexChanged);
+            // 
+            // configScreenBut
+            // 
+            this.configScreenBut.Location = new System.Drawing.Point(413, 19);
+            this.configScreenBut.Name = "configScreenBut";
+            this.configScreenBut.Size = new System.Drawing.Size(69, 21);
+            this.configScreenBut.TabIndex = 5;
+            this.configScreenBut.Text = "Config...";
+            this.configScreenBut.UseVisualStyleBackColor = true;
+            // 
+            // configCpuBut
+            // 
+            this.configCpuBut.Location = new System.Drawing.Point(413, 19);
+            this.configCpuBut.Name = "configCpuBut";
+            this.configCpuBut.Size = new System.Drawing.Size(69, 21);
+            this.configCpuBut.TabIndex = 6;
+            this.configCpuBut.Text = "Config...";
+            this.configCpuBut.UseVisualStyleBackColor = true;
+            // 
+            // configRamBut
+            // 
+            this.configRamBut.Location = new System.Drawing.Point(413, 18);
+            this.configRamBut.Name = "configRamBut";
+            this.configRamBut.Size = new System.Drawing.Size(69, 21);
+            this.configRamBut.TabIndex = 7;
+            this.configRamBut.Text = "Config...";
+            this.configRamBut.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -163,5 +203,8 @@
         private System.Windows.Forms.ComboBox cpuBox;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox ramBox;
+        private System.Windows.Forms.Button configScreenBut;
+        private System.Windows.Forms.Button configCpuBut;
+        private System.Windows.Forms.Button configRamBut;
     }
 }
