@@ -394,19 +394,19 @@ namespace DefaultCpu
 
         public string Name
         {
-            get { return "Default Cpu"; }
+            get { return "ADCPU port"; }
         }
         public string Description
         {
-            get { return "A normal cpu following the spec"; }
+            get { return "A port of the android version (Made in java)"; }
         }
         public string Author
         {
-            get { return "DelusionalLogic"; }
+            get { return "sticksoft"; }
         }
         public string Version
         {
-            get { return "0.1"; }
+            get { return "0.1 (NON WORKING)"; }
         }
         public bool configPossible
         {
