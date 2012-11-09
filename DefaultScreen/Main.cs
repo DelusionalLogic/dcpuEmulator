@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PluginInterface;
+using SlimDX.Windows;
 
 namespace DefaultScreen
 {
@@ -11,12 +12,16 @@ namespace DefaultScreen
     {
         public IPluginHost Host { get; set; }
 
+        public RenderForm renderForm;
+
         public void openConfig()
         {
         }
 
         public void initialize()
         {
+            renderForm = new RenderForm(Name);
+            
         }
 
         public void dispose()

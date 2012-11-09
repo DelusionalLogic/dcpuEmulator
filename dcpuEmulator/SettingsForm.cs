@@ -27,15 +27,15 @@ namespace dcpuEmulator
         public string filePath = "";
         public IScreen selectedScreen
         {
-            get { return (IScreen)screenBox.SelectedItem; }
+            get { return screenPlugins[screenBox.SelectedIndex]; }
         }
         public ICpu selectedCpu
         {
-            get { return (ICpu)cpuBox.SelectedItem; }
+            get { return cpuPlugins[cpuBox.SelectedIndex]; }
         }
         public IRam selectedRam
         {
-            get { return (IRam)ramBox.SelectedItem; }
+            get { return ramPlugins[ramBox.SelectedIndex]; }
         }
 
         public SettingsForm(PluginHandler pluginHandler)
@@ -44,13 +44,36 @@ namespace dcpuEmulator
             InitializeComponent();
         }
 
+        private List<IScreen> screenPlugins;
+        private List<ICpu> cpuPlugins;
+        private List<IRam> ramPlugins; 
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             AdvConsole.Log("SettingsForm loaded");
 
-            screenBox.Items.AddRange(pluginHandler.loadPluginsInFolder<IScreen>(AppDomain.CurrentDomain.BaseDirectory + "Screen").ToArray());
-            cpuBox.Items.AddRange(pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Cpu").ToArray());
-            ramBox.Items.AddRange(pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Ram").ToArray());
+            screenPlugins = pluginHandler.loadPluginsInFolder<IScreen>(AppDomain.CurrentDomain.BaseDirectory + "Screen");
+            cpuPlugins = pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Cpu");
+            ramPlugins = pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Ram");
+
+            populateCombo(screenPlugins.ToArray(), cpuPlugins.ToArray(), ramPlugins.ToArray());
+        }
+
+        private void populateCombo(IScreen[] screens, ICpu[] cpus, IRam[] rams)
+        {
+            const string listSetup = "{0} - {1} [{2}]";
+            foreach (var screen in screens)
+            {
+                screenBox.Items.Add(string.Format(listSetup, screen.Name, screen.Author, screen.Version));
+            }
+            foreach (var cpu in cpus)
+            {
+                cpuBox.Items.Add(string.Format(listSetup, cpu.Name, cpu.Author, cpu.Version));
+            }
+            foreach (var ram in rams)
+            {
+                ramBox.Items.Add(string.Format(listSetup, ram.Name, ram.Author, ram.Version));
+            }
         }
 
         private void browseBut_Click(object sender, EventArgs e)
