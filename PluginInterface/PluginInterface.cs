@@ -10,11 +10,12 @@ namespace PluginInterface
     {
         ushort readMem(int address);
         void writeMem(int address, ushort value);
+
+        void dump(string message);
     }
 
     public interface ICpu : IPlugin
     {
-        void tick();
     }
 
     public interface IRam : IPlugin

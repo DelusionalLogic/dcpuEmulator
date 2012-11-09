@@ -11,20 +11,22 @@ namespace dcpuEmulator
 {
     public class Computer : IPluginHost
     {
-        private readonly IScreen screen;
-        private readonly ICpu cpu;
-        private readonly IRam ram;
+        private IScreen screen;
+        private ICpu cpu;
+        private IRam ram;
 
-        public Computer(IScreen screen, ICpu cpu, IRam ram)
+        public void setParts(string binaryPath, IScreen screen, ICpu cpu, IRam ram)
         {
             this.screen = screen;
             this.cpu = cpu;
             this.ram = ram;
+
+            loadFile(binaryPath);
         }
 
         public void loadFile(string fileName)
         {
-            using (var sr = new StreamReader(fileName))
+            using (var sr = new StreamReader(fileName,Encoding.UTF8))
             {
                 int addr = 0;
                 string str;
@@ -34,6 +36,9 @@ namespace dcpuEmulator
 
                     foreach (var word in words)
                     {
+                        if(word.Length != 4)
+                            continue;
+                        AdvConsole.Debug(word);
                         ushort num = ushort.Parse(word, NumberStyles.HexNumber);
                         ram.writeMem(addr++, num);
                     }
@@ -43,12 +48,17 @@ namespace dcpuEmulator
 
         public ushort readMem(int address)
         {
-            throw new NotImplementedException();
+            return ram.readMem(address);
         }
 
         public void writeMem(int address, ushort value)
         {
-            throw new NotImplementedException();
+            ram.writeMem(address, value);
+        }
+
+        public void dump(string message)
+        {
+            AdvConsole.Log(message);
         }
     }
 }

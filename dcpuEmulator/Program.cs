@@ -16,6 +16,7 @@ namespace dcpuEmulator
         [STAThread]
         static void Main(string[] args)
         {
+            computer = new Computer();
             pluginHandler = new PluginHandler(computer);
 
             AdvConsole.Log("Opening SettingsForm"); 
@@ -35,7 +36,7 @@ namespace dcpuEmulator
             AdvConsole.Log(string.Format("Screen Loaded: {0}", settings.selectedScreen.Name));
             AdvConsole.Log(string.Format("Cpu Loaded: {0}", settings.selectedCpu.Name));
             AdvConsole.Log(string.Format("Ram Loaded: {0}", settings.selectedRam.Name));
-            computer = new Computer(settings.selectedScreen, settings.selectedCpu, settings.selectedRam);
+            computer.setParts(settings.filePath, settings.selectedScreen, settings.selectedCpu, settings.selectedRam);
         }
     }
 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using PluginInterface;
 
-namespace DefaultScreen
+namespace DefaultCpu
 {
-    public class Main : IScreen
+    public class Main : ICpu
     {
         public IPluginHost Host { get; set; }
 
@@ -17,7 +17,19 @@ namespace DefaultScreen
 
         public void initialize()
         {
-            
+            new Thread(loop).Start();
+        }
+
+        private void loop()
+        {
+            while (true)
+            {
+                tick();
+            }
+        }
+
+        private void tick()
+        {
         }
 
         public void dispose()
@@ -26,11 +38,11 @@ namespace DefaultScreen
 
         public string Name
         {
-            get { return "Default Screen"; }
+            get { return "Default Cpu"; }
         }
         public string Description
         {
-            get { return "A normal screen following the spec"; }
+            get { return "A normal cpu following the spec"; }
         }
         public string Author
         {
