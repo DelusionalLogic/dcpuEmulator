@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PluginInterface;
 
 namespace dcpuEmulator
 {
@@ -21,16 +22,26 @@ namespace dcpuEmulator
             if (handler != null) handler(this, e);
         }
 
-        public string filePath = "";
+        private PluginHandler pluginHandler;
 
-        public SettingsForm()
+        public string filePath = "";
+        public IScreen selectedScreen;
+        public ICpu selectedCpu;
+        public IRam selectedRam;
+
+        public SettingsForm(PluginHandler pluginHandler)
         {
+            this.pluginHandler = pluginHandler;
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             AdvConsole.Log("SettingsForm loaded");
+
+            screenBox.Items.AddRange(pluginHandler.loadPluginsInFolder<IScreen>(AppDomain.CurrentDomain.BaseDirectory + "Screen").ToArray());
+            cpuBox.Items.AddRange(pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Cpu").ToArray());
+            ramBox.Items.AddRange(pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Ram").ToArray());
         }
 
         private void browseBut_Click(object sender, EventArgs e)

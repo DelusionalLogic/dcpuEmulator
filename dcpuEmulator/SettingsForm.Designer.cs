@@ -28,21 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.filePathBox = new System.Windows.Forms.TextBox();
             this.browseBut = new System.Windows.Forms.Button();
             this.openBinDia = new System.Windows.Forms.OpenFileDialog();
             this.okBut = new System.Windows.Forms.Button();
+            this.screenBox = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cpuBox = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ramBox = new System.Windows.Forms.ComboBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(153, 104);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(179, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "This will do something at some point!";
             // 
             // filePathBox
             // 
@@ -76,18 +75,77 @@
             this.okBut.UseVisualStyleBackColor = true;
             this.okBut.Click += new System.EventHandler(this.okBut_Click);
             // 
+            // screenBox
+            // 
+            this.screenBox.FormattingEnabled = true;
+            this.screenBox.Location = new System.Drawing.Point(6, 19);
+            this.screenBox.Name = "screenBox";
+            this.screenBox.Size = new System.Drawing.Size(401, 21);
+            this.screenBox.TabIndex = 4;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.screenBox);
+            this.groupBox1.Location = new System.Drawing.Point(12, 62);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(488, 49);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Screen";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cpuBox);
+            this.groupBox2.Location = new System.Drawing.Point(12, 117);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(488, 49);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Cpu";
+            // 
+            // cpuBox
+            // 
+            this.cpuBox.FormattingEnabled = true;
+            this.cpuBox.Location = new System.Drawing.Point(6, 19);
+            this.cpuBox.Name = "cpuBox";
+            this.cpuBox.Size = new System.Drawing.Size(401, 21);
+            this.cpuBox.TabIndex = 4;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.ramBox);
+            this.groupBox3.Location = new System.Drawing.Point(12, 172);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(488, 49);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ram";
+            // 
+            // ramBox
+            // 
+            this.ramBox.FormattingEnabled = true;
+            this.ramBox.Location = new System.Drawing.Point(6, 19);
+            this.ramBox.Name = "ramBox";
+            this.ramBox.Size = new System.Drawing.Size(401, 21);
+            this.ramBox.TabIndex = 4;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 439);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.okBut);
             this.Controls.Add(this.browseBut);
             this.Controls.Add(this.filePathBox);
-            this.Controls.Add(this.label1);
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,10 +153,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox filePathBox;
         private System.Windows.Forms.Button browseBut;
         private System.Windows.Forms.OpenFileDialog openBinDia;
         private System.Windows.Forms.Button okBut;
+        private System.Windows.Forms.ComboBox screenBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cpuBox;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox ramBox;
     }
 }

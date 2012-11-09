@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dcpuEmulator", "dcpuEmulato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInterface", "PluginInterface\PluginInterface.csproj", "{44B10CA0-DEDE-491F-8963-4F58F172C871}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultScreen", "DefaultScreen\DefaultScreen.csproj", "{50DB40B2-D1B2-4208-807E-72CEB12B534F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B10CA0-DEDE-491F-8963-4F58F172C871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50DB40B2-D1B2-4208-807E-72CEB12B534F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50DB40B2-D1B2-4208-807E-72CEB12B534F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50DB40B2-D1B2-4208-807E-72CEB12B534F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50DB40B2-D1B2-4208-807E-72CEB12B534F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

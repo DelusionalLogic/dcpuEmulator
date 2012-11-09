@@ -27,7 +27,7 @@ namespace dcpuEmulator
             using (var sr = new StreamReader(fileName))
             {
                 int addr = 0;
-                string str = "";
+                string str;
                 while ((str = sr.ReadLine()) != null)
                 {
                     string[] words = str.Split(' ');

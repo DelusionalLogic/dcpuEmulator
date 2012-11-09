@@ -37,8 +37,11 @@ namespace PluginInterface
         string Author { get; }
         string Version { get; }
 
-        void initialize();
+        bool configPossible { get; }
 
+        void openConfig();
+
+        void initialize();
         void dispose();
     }
 }

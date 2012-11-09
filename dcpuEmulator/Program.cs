@@ -11,13 +11,17 @@ namespace dcpuEmulator
     {
         private static Computer computer;
 
+        private static PluginHandler pluginHandler;
+
         [STAThread]
         static void Main(string[] args)
         {
+            pluginHandler = new PluginHandler();
+
             AdvConsole.Log("Opening SettingsForm"); 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SettingsForm settingsForm = new SettingsForm();
+            SettingsForm settingsForm = new SettingsForm(pluginHandler);
             settingsForm.setupComplete += setupComplete;
             Application.Run(settingsForm);
             AdvConsole.ReadLine();
@@ -27,7 +31,7 @@ namespace dcpuEmulator
         {
             AdvConsole.Log("Setting dialog done");
             AdvConsole.Log(string.Format("Binary path: {0}", ((SettingsForm)sender).filePath));
-            //TODO: Add computer init 
+            //TODO: Add computer init
         }
     }
 }
