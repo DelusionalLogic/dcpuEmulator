@@ -92,7 +92,7 @@ namespace dcpuEmulator
         private void okBut_Click(object sender, EventArgs e)
         {
             onSetupComplete(new EventArgs());
-            this.Close();
+            Close();
         }
 
         private void screenBox_SelectedIndexChanged(object sender, EventArgs e)

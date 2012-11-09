@@ -22,11 +22,12 @@ namespace dcpuEmulator
             this.ram = ram;
 
             loadFile(binaryPath);
+            cpu.start();
         }
 
         public void loadFile(string fileName)
         {
-            using (var sr = new StreamReader(fileName,Encoding.UTF8))
+            using (var sr = new StreamReader(fileName, Encoding.UTF8))
             {
                 int addr = 0;
                 string str;

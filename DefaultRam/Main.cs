@@ -28,7 +28,6 @@ namespace DefaultRam
 
         public void writeMem(int address, ushort value)
         {
-            Host.dump(string.Format("Writing {0} to {1}", value, address));
             memory[address] = value;
         }
 
