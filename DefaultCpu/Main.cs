@@ -251,6 +251,10 @@ namespace DefaultCpu
                         break;
                 }
             }
+
+            PC = tPC;
+            SP = tSP;
+
             Host.dump(string.Format("A = {0}, B = {1}, C = {2}, X = {3}, Y = {4}, Z = {5}, I = {6}, J = {7}", register[(int)Register.A], register[(int)Register.B], register[(int)Register.C], register[(int)Register.X], register[(int)Register.Y], register[(int)Register.Z], register[(int)Register.I], register[(int)Register.J]));
         }
 
@@ -395,7 +399,7 @@ namespace DefaultCpu
 
         public string Name
         {
-            get { return "ADCPU port"; }
+            get { return "ADCPU"; }
         }
         public string Description
         {
@@ -407,7 +411,7 @@ namespace DefaultCpu
         }
         public string Version
         {
-            get { return "0.1 (NON WORKING)"; }
+            get { return "0.1"; }
         }
         public bool configPossible
         {
