@@ -91,6 +91,7 @@ namespace dcpuEmulator
 
         private void okBut_Click(object sender, EventArgs e)
         {
+            Hide();
             onSetupComplete(new EventArgs());
             Close();
         }

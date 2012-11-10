@@ -72,10 +72,11 @@ namespace DefaultCpu
 			// Work out address type and location before instruction
 			// These will only modify tSP or tPC, not the actual SP or PC
 			// until after the instruction completes. 
+		    AddressType aType = getType(a), bType = getType(b);
             ushort aAddr = addressA(a), bAddr = addressB(b);
 
 			// Grab the actual values
-            ushort aVal = read(aAddr), bVal = read(bAddr);
+            ushort aVal = read(aType, aAddr), bVal = read(bType, bAddr);
 
 			int res = 0; // Result
 
@@ -189,7 +190,7 @@ namespace DefaultCpu
 					break;
 			}
 
-            write(bAddr, (ushort)(res & 0xffff));
+            write(bType, bAddr, (ushort)(res & 0xffff));
 		}
 		else
             {
@@ -209,7 +210,7 @@ namespace DefaultCpu
                     case 0x00: // Reserved
                     case 0x01: // JSR
                         // Get jump address
-                        ushort jmp = read(addressA(a));
+                        ushort jmp = read(getType(a), addressA(a));
 
                         // Push PC
                         Host.writeMem(--tSP, tPC);
@@ -258,9 +259,9 @@ namespace DefaultCpu
             return (short) value;
         }
 
-        private ushort read(ushort address)
+        private ushort read(AddressType type, ushort address)
         {
-            switch (getType(address))
+            switch (type)
             {
                 case AddressType.Register:
                     return register[address];
@@ -279,9 +280,9 @@ namespace DefaultCpu
             }
         }
 
-        private void write(ushort address, ushort word)
+        private void write(AddressType type, ushort address, ushort word)
         {
-            switch (getType(address))
+            switch (type)
             {
                 case AddressType.Register:
                     register[address] = word;
