@@ -39,7 +39,6 @@ namespace dcpuEmulator
                     {
                         if(word.Length != 4)
                             continue;
-                        AdvConsole.Debug(word);
                         ushort num = ushort.Parse(word, NumberStyles.HexNumber);
                         ram.writeMem(addr++, num);
                     }
