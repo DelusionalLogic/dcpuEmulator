@@ -9,7 +9,7 @@ namespace DefaultRam
 {
     public class Main : IRam
     {
-        private ushort[] memory = new ushort[0x10000];
+        private ushort[] memory = new ushort[0x10001];
 
         public IPluginHost Host { get; set; }
 
@@ -23,12 +23,15 @@ namespace DefaultRam
 
         public ushort readMem(int address)
         {
-            return memory[address];
+            if(address < memory.Length)
+                return memory[address];
+            return 0;
         }
 
         public void writeMem(int address, ushort value)
         {
-            memory[address] = value;
+            if(address < memory.Length)
+                memory[address] = value;
         }
 
         public void dispose()
@@ -41,7 +44,7 @@ namespace DefaultRam
         }
         public string Description
         {
-            get { return "A normal Ram module following the spec"; }
+            get { return "A normal Ram module following the spec, returns 0x0000 on memeory out of bounds"; }
         }
         public string Author
         {

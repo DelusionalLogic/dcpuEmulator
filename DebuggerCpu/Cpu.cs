@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using PluginInterface;
 
-namespace DefaultCpu
+namespace DebuggerCpu
 {
-    public class Main : ICpu
+    class Cpu
     {
-        public IPluginHost Host { get; set; }
+        private IPluginHost Host { get; set; }
 
         public ushort[] register;
         public ushort PC;
@@ -19,7 +20,10 @@ namespace DefaultCpu
 
         private ushort tSP, tPC;
 
-        private Queue<ushort> interruptQueue = new Queue<ushort>(); 
+        private bool PCMod = false;
+        private bool SPMod = false;
+
+        private readonly Queue<ushort> interruptQueue = new Queue<ushort>();
 
         private bool skipping;
         private bool interruptQueueing;
@@ -27,17 +31,21 @@ namespace DefaultCpu
 
         private bool running;
 
-        public void initialize()
+        public Cpu(IPluginHost host)
         {
+            Host = host;
             register = new ushort[8];
             PC = SP = EX = IA = 0;
             skipping = interruptQueueing = error = false;
         }
 
-        public void start()
+        public void run()
         {
-            running = true;
-            new Thread(loop).Start();
+            if (!running)
+            {
+                running = true;
+                new Thread(loop).Start();
+            }
         }
 
         public void stop()
@@ -48,9 +56,7 @@ namespace DefaultCpu
         public void reset()
         {
             for (int i = 0; i < register.Length; i++)
-            {
                 register[i] = 0;
-            }
             PC = SP = EX = IA = 0;
             skipping = interruptQueueing = false;
             interruptQueue.Clear();
@@ -64,162 +70,182 @@ namespace DefaultCpu
             }
         }
 
-        private void tick()
+        public void tick()
         {
             tSP = SP;
-            tPC = (ushort) (PC + 1);
+            tPC = (ushort)(PC + 1);
 
-            ushort instr = Host.readMem(PC); 
-            
+            ushort instr = Host.readMem(PC);
+
             int opcode = instr & 0x1f;
             ushort b = (ushort)((instr >> 5) & 0x1f);
             ushort a = (ushort)(instr >> 10);
 
             if (opcode != 0)
-		    {
-			    if (skipping)
-			    {
-				    // Skip reading next words 
-				    if ((b >= 0x10 && b < 0x18) || b == 0x1a || b == 0x1e || b == 0x1f) // [register + next word], [SP + next word], [next word], next word
-					    tPC++;
-				    if ((a >= 0x10 && a < 0x18) || a == 0x1a || a == 0x1e || a == 0x1f) // [register + next word], [SP + next word], [next word], next word
-					    tPC++;
+            {
+                if (skipping)
+                {
+                    // Skip reading next words 
+                    if ((b >= 0x10 && b < 0x18) || b == 0x1a || b == 0x1e || b == 0x1f) // [register + next word], [SP + next word], [next word], next word
+                        tPC++;
+                    if ((a >= 0x10 && a < 0x18) || a == 0x1a || a == 0x1e || a == 0x1f) // [register + next word], [SP + next word], [next word], next word
+                        tPC++;
 
-				    PC = tPC;
+                    PC = tPC;
 
-				    if (opcode < 0x10 || opcode > 0x17) // Keep skipping over conditionals
-					    skipping = false;
-				    return;
-			    }
+                    if (opcode < 0x10 || opcode > 0x17) // Keep skipping over conditionals
+                        skipping = false;
+                    return;
+                }
 
-			    // Work out address type and location before instruction
-			    // These will only modify tSP or tPC, not the actual SP or PC
-			    // until after the instruction completes. 
-		        AddressType aType = getType(a), bType = getType(b);
+                // Work out address type and location before instruction
+                // These will only modify tSP or tPC, not the actual SP or PC
+                // until after the instruction completes. 
+                AddressType aType = getType(a), bType = getType(b);
                 ushort aAddr = addressA(a), bAddr = addressB(b);
 
-			    // Grab the actual values
+                // Grab the actual values
                 ushort aVal = read(aType, aAddr), bVal = read(bType, bAddr);
 
-			    int res = 0; // Result
+                int res = 0;
+                bool shouldWrite = false;
 
-			    switch (opcode)
-			    {
-				    case 0x01: // SET
-					    res = aVal;
-					    break;
-				    case 0x02: // ADD
-					    res = bVal + aVal;
+                switch (opcode)
+                {
+                    case 0x01: // SET
+                        res = aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x02: // ADD
+                        res = bVal + aVal;
                         EX = (res < 0xffff) ? (ushort)0 : (ushort)1;
-					    break;
-				    case 0x03: // SUB
-					    res = bVal - aVal;
-                        EX = (ushort) ((res > 0) ? 0 : (ushort)0xffff);
-					    break;
-				    case 0x04: // MUL
-					    res = bVal * aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x03: // SUB
+                        res = bVal - aVal;
+                        EX = (ushort)((res > 0) ? 0 : (ushort)0xffff);
+                        shouldWrite = true;
+                        break;
+                    case 0x04: // MUL
+                        res = bVal * aVal;
                         EX = (ushort)(res >> 16);
-					    break;
-				    case 0x05: // MLI
-					    res = toSigned(bVal) * toSigned(aVal);
+                        shouldWrite = true;
+                        break;
+                    case 0x05: // MLI
+                        res = toSigned(bVal) * toSigned(aVal);
                         EX = (ushort)(res >> 16);
-					    break;
-				    case 0x06: // DIV
-					    res = bVal / aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x06: // DIV
+                        res = bVal / aVal;
                         EX = (ushort)(((bVal << 16) / aVal) & 0xffff);
-					    break;
-				    case 0x07: // DVI
-					    res = toSigned(bVal) / toSigned(aVal);
+                        shouldWrite = true;
+                        break;
+                    case 0x07: // DVI
+                        res = toSigned(bVal) / toSigned(aVal);
                         EX = (ushort)(((toSigned(bVal) << 16) / toSigned(aVal)) & 0xffff);
-					    break;
-				    case 0x08: // MOD
-					    if (aVal == 0)
-						    res = 0;
-					    else
-						    res = bVal % aVal;
-					    break;
-				    case 0x09: // MDI
-					    if (aVal == 0)
-						    res = 0;
-					    else
-						    res = toSigned(bVal) % toSigned(aVal);
-					    break;
-				    case 0x0a: // AND
-					    res = bVal & aVal;
-					    break;
-				    case 0x0b: // BOR
-					    res = bVal | aVal;
-					    break;
-				    case 0x0c: // XOR
-					    res = bVal ^ aVal;
-					    break;
-				    case 0x0d: // SHR
-					    res = bVal >> a;
-					    EX = (ushort)(((bVal << 16) >> a) & 0xffff);
-					    break;
-				    case 0x0e: // ASR
-					    res = bVal >> a;
+                        shouldWrite = true;
+                        break;
+                    case 0x08: // MOD
+                        if (aVal == 0)
+                            res = 0;
+                        else
+                            res = bVal % aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x09: // MDI
+                        if (aVal == 0)
+                            res = 0;
+                        else
+                            res = toSigned(bVal) % toSigned(aVal);
+                        shouldWrite = true;
+                        break;
+                    case 0x0a: // AND
+                        res = bVal & aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x0b: // BOR
+                        res = bVal | aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x0c: // XOR
+                        res = bVal ^ aVal;
+                        shouldWrite = true;
+                        break;
+                    case 0x0d: // SHR
+                        res = bVal >> a;
                         EX = (ushort)(((bVal << 16) >> a) & 0xffff);
-					    break;
-				    case 0x0f: // SHL
-					    res = bVal << a;
+                        shouldWrite = true;
+                        break;
+                    case 0x0e: // ASR
+                        res = bVal >> a;
+                        EX = (ushort)(((bVal << 16) >> a) & 0xffff);
+                        shouldWrite = true;
+                        break;
+                    case 0x0f: // SHL
+                        res = bVal << a;
                         EX = (ushort)(((bVal << aVal) >> 16) & 0xfff);
-					    break;
-				    case 0x10: // IFB
-					    skipping = (bVal & aVal) != 0;
-					    break;
-				    case 0x11: // IFC
-					    skipping = (bVal & aVal) == 0;
-					    break;
-				    case 0x12: // IFE
-					    skipping = (bVal == aVal);
-					    break;
-				    case 0x13: // IFN
-					    skipping = (bVal != aVal);
-					    break;
-				    case 0x14: // IFG
-					    skipping = (bVal > aVal);
-					    break;
-				    case 0x15: // IFA
-					    skipping = (toSigned(bVal) > toSigned(aVal));
-					    break;
-				    case 0x16: // IFL
-					    skipping = (bVal < aVal);
-					    break;
-				    case 0x17: // IFU
-					    skipping = (toSigned(bVal) < toSigned(aVal));
-					    break;
-				    case 0x18: // -
+                        shouldWrite = true;
+                        break;
+                    case 0x10: // IFB
+                        skipping = !((bVal & aVal) != 0);
+                        break;
+                    case 0x11: // IFC
+                        skipping = !((bVal & aVal) == 0);
+                        break;
+                    case 0x12: // IFE
+                        skipping = !(bVal == aVal);
+                        break;
+                    case 0x13: // IFN
+                        skipping = !(bVal != aVal);
+                        break;
+                    case 0x14: // IFG
+                        skipping = !(bVal > aVal);
+                        break;
+                    case 0x15: // IFA
+                        skipping = !(toSigned(bVal) > toSigned(aVal));
+                        break;
+                    case 0x16: // IFL
+                        skipping = !(bVal < aVal);
+                        break;
+                    case 0x17: // IFU
+                        skipping = !(toSigned(bVal) < toSigned(aVal));
+                        break;
+                    case 0x18: // -
                     case 0x19: // -
                         error = true;
                         break;
-				    case 0x1a: // ADX
-					    res = bVal + aVal + EX;
+                    case 0x1a: // ADX
+                        res = bVal + aVal + EX;
                         EX = (ushort)((res < 0) ? 0 : 1);
-					    break;
-				    case 0x1b: // SBX
-					    res = bVal - aVal - EX;
+                        shouldWrite = true;
+                        break;
+                    case 0x1b: // SBX
+                        res = bVal - aVal - EX;
                         EX = (ushort)((res > 0) ? 0 : 1);
-					    break;
-				    case 0x1c: // -
-				    case 0x1d: // -
-			            error = true;
-			            break;
-				    case 0x1e: // STI
-					    res = aVal;
-					    register[(int) Register.I]++;
-					    register[(int) Register.J]++;
-					    break;
-				    case 0x1f: // STD
-					    res = aVal;
-					    register[(int) Register.I]--;
-					    register[(int) Register.J]--;
-					    break;
-			    }
-
-                write(bType, bAddr, (ushort)(res & 0xffff));
-		    }
-		else
+                        shouldWrite = true;
+                        break;
+                    case 0x1c: // -
+                    case 0x1d: // -
+                        error = true;
+                        break;
+                    case 0x1e: // STI
+                        res = aVal;
+                        register[(int)Register.I]++;
+                        register[(int)Register.J]++;
+                        shouldWrite = true;
+                        break;
+                    case 0x1f: // STD
+                        res = aVal;
+                        register[(int)Register.I]--;
+                        register[(int)Register.J]--;
+                        shouldWrite = true;
+                        break;
+                }
+                if(shouldWrite)
+                    write(bType, bAddr, (ushort)(res & 0xffff));
+            }
+            else
             {
                 if (skipping)
                 {
@@ -255,15 +281,15 @@ namespace DefaultCpu
                         break;
                     case 0x08: // INT
                         ushort interrupt = read(getType(a), addressA(a));
-                        if(interruptQueueing)
+                        if (interruptQueueing)
                             interruptQueue.Enqueue(interrupt);
-                        else if(IA != 0)
+                        else if (IA != 0)
                         {
                             interruptQueueing = true;
                             Host.writeMem(--tSP, tPC);
-                            Host.writeMem(--tSP, register[(int) Register.A]);
+                            Host.writeMem(--tSP, register[(int)Register.A]);
                             tPC = IA;
-                            register[(int) Register.A] = interrupt;
+                            register[(int)Register.A] = interrupt;
                         }
                         break;
                     case 0x09: // IAG
@@ -274,7 +300,7 @@ namespace DefaultCpu
                         break;
                     case 0x0b: // RFI
                         interruptQueueing = false;
-                        register[(int) Register.A] = Host.readMem(tSP++);
+                        register[(int)Register.A] = Host.readMem(tSP++);
                         tPC = Host.readMem(tSP++);
                         break;
                     case 0x0c: // IAQ
@@ -307,24 +333,25 @@ namespace DefaultCpu
                 }
             }
 
-            if(!interruptQueueing && interruptQueue.Count != 0)
+            if (!interruptQueueing && interruptQueue.Count != 0)
             {
                 interruptQueueing = true;
                 Host.writeMem(tSP--, tPC);
-                Host.writeMem(tSP--, register[(int) Register.A]);
+                Host.writeMem(tSP--, register[(int)Register.A]);
                 tPC = IA;
-                register[(int) Register.A] = interruptQueue.Dequeue();
+                register[(int)Register.A] = interruptQueue.Dequeue();
             }
 
-            PC = tPC;
-            SP = tSP;
-
-            Host.dump(string.Format("A = {0}, B = {1}, C = {2}, X = {3}, Y = {4}, Z = {5}, I = {6}, J = {7}", register[(int)Register.A], register[(int)Register.B], register[(int)Register.C], register[(int)Register.X], register[(int)Register.Y], register[(int)Register.Z], register[(int)Register.I], register[(int)Register.J]));
+            if(!PCMod)
+                PC = tPC;
+            if (!SPMod)
+                SP = tSP;
+            PCMod = SPMod = false;
         }
 
         private short toSigned(ushort value)
         {
-            return (short) value;
+            return (short)value;
         }
 
         private ushort read(AddressType type, ushort address)
@@ -360,9 +387,11 @@ namespace DefaultCpu
                     break;
                 case AddressType.PC:
                     PC = word;
+                    PCMod = true;
                     break;
                 case AddressType.SP:
                     SP = word;
+                    SPMod = true;
                     break;
                 case AddressType.EX:
                     EX = word;
@@ -452,57 +481,5 @@ namespace DefaultCpu
 
             return (char)(value - 0x20);
         }
-
-        public void dispose()
-        {
-        }
-
-        public void openConfig()
-        {
-        }
-
-        public string Name
-        {
-            get { return "ADCPU"; }
-        }
-        public string Description
-        {
-            get { return "A port of the android version (Made in java)"; }
-        }
-        public string Author
-        {
-            get { return "sticksoft"; }
-        }
-        public string Version
-        {
-            get { return "0.1"; }
-        }
-        public bool configPossible
-        {
-            get { return false; }
-        }
-    }
-
-    public enum Register
-    {
-        A = 0,
-        B,
-        C,
-        X,
-        Y,
-        Z,
-        I,
-        J,
-    }
-
-    public enum AddressType
-    {
-        Register,
-        Ram,
-        PC,
-        SP,
-        EX,
-        IA,
-        Literal,
     }
 }

@@ -28,141 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.PCRegLabel = new System.Windows.Forms.Label();
-            this.JRegLabel = new System.Windows.Forms.Label();
-            this.IRegLabel = new System.Windows.Forms.Label();
-            this.ZRegLabel = new System.Windows.Forms.Label();
-            this.YRegLabel = new System.Windows.Forms.Label();
-            this.XRegLabel = new System.Windows.Forms.Label();
-            this.CRegLabel = new System.Windows.Forms.Label();
-            this.BRegLabel = new System.Windows.Forms.Label();
-            this.ARegLabel = new System.Windows.Forms.Label();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.updateMemBut = new System.Windows.Forms.Button();
             this.ResetBut = new System.Windows.Forms.Button();
             this.RunBut = new System.Windows.Forms.Button();
             this.StepBut = new System.Windows.Forms.Button();
-            this.actionBox = new System.Windows.Forms.ListBox();
-            this.groupBox1.SuspendLayout();
+            this.registerTable = new System.Windows.Forms.DataGridView();
+            this.memoryTable = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.registerTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memoryTable)).BeginInit();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.PCRegLabel);
-            this.groupBox1.Controls.Add(this.JRegLabel);
-            this.groupBox1.Controls.Add(this.IRegLabel);
-            this.groupBox1.Controls.Add(this.ZRegLabel);
-            this.groupBox1.Controls.Add(this.YRegLabel);
-            this.groupBox1.Controls.Add(this.XRegLabel);
-            this.groupBox1.Controls.Add(this.CRegLabel);
-            this.groupBox1.Controls.Add(this.BRegLabel);
-            this.groupBox1.Controls.Add(this.ARegLabel);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(121, 106);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Registers";
-            // 
-            // PCRegLabel
-            // 
-            this.PCRegLabel.AutoSize = true;
-            this.PCRegLabel.Location = new System.Drawing.Point(6, 70);
-            this.PCRegLabel.Name = "PCRegLabel";
-            this.PCRegLabel.Size = new System.Drawing.Size(39, 13);
-            this.PCRegLabel.TabIndex = 8;
-            this.PCRegLabel.Text = "PC = 0";
-            // 
-            // JRegLabel
-            // 
-            this.JRegLabel.AutoSize = true;
-            this.JRegLabel.Location = new System.Drawing.Point(82, 29);
-            this.JRegLabel.Name = "JRegLabel";
-            this.JRegLabel.Size = new System.Drawing.Size(30, 13);
-            this.JRegLabel.TabIndex = 7;
-            this.JRegLabel.Text = "J = 0";
-            // 
-            // IRegLabel
-            // 
-            this.IRegLabel.AutoSize = true;
-            this.IRegLabel.Location = new System.Drawing.Point(82, 16);
-            this.IRegLabel.Name = "IRegLabel";
-            this.IRegLabel.Size = new System.Drawing.Size(28, 13);
-            this.IRegLabel.TabIndex = 6;
-            this.IRegLabel.Text = "I = 0";
-            // 
-            // ZRegLabel
-            // 
-            this.ZRegLabel.AutoSize = true;
-            this.ZRegLabel.Location = new System.Drawing.Point(44, 42);
-            this.ZRegLabel.Name = "ZRegLabel";
-            this.ZRegLabel.Size = new System.Drawing.Size(32, 13);
-            this.ZRegLabel.TabIndex = 5;
-            this.ZRegLabel.Text = "Z = 0";
-            // 
-            // YRegLabel
-            // 
-            this.YRegLabel.AutoSize = true;
-            this.YRegLabel.Location = new System.Drawing.Point(44, 29);
-            this.YRegLabel.Name = "YRegLabel";
-            this.YRegLabel.Size = new System.Drawing.Size(32, 13);
-            this.YRegLabel.TabIndex = 4;
-            this.YRegLabel.Text = "Y = 0";
-            // 
-            // XRegLabel
-            // 
-            this.XRegLabel.AutoSize = true;
-            this.XRegLabel.Location = new System.Drawing.Point(44, 16);
-            this.XRegLabel.Name = "XRegLabel";
-            this.XRegLabel.Size = new System.Drawing.Size(32, 13);
-            this.XRegLabel.TabIndex = 3;
-            this.XRegLabel.Text = "X = 0";
-            // 
-            // CRegLabel
-            // 
-            this.CRegLabel.AutoSize = true;
-            this.CRegLabel.Location = new System.Drawing.Point(6, 42);
-            this.CRegLabel.Name = "CRegLabel";
-            this.CRegLabel.Size = new System.Drawing.Size(32, 13);
-            this.CRegLabel.TabIndex = 2;
-            this.CRegLabel.Text = "C = 0";
-            // 
-            // BRegLabel
-            // 
-            this.BRegLabel.AutoSize = true;
-            this.BRegLabel.Location = new System.Drawing.Point(6, 29);
-            this.BRegLabel.Name = "BRegLabel";
-            this.BRegLabel.Size = new System.Drawing.Size(32, 13);
-            this.BRegLabel.TabIndex = 1;
-            this.BRegLabel.Text = "B = 0";
-            // 
-            // ARegLabel
-            // 
-            this.ARegLabel.AutoSize = true;
-            this.ARegLabel.Location = new System.Drawing.Point(6, 16);
-            this.ARegLabel.Name = "ARegLabel";
-            this.ARegLabel.Size = new System.Drawing.Size(32, 13);
-            this.ARegLabel.TabIndex = 0;
-            this.ARegLabel.Text = "A = 0";
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.updateMemBut);
             this.groupBox2.Controls.Add(this.ResetBut);
             this.groupBox2.Controls.Add(this.RunBut);
             this.groupBox2.Controls.Add(this.StepBut);
-            this.groupBox2.Location = new System.Drawing.Point(12, 124);
+            this.groupBox2.Location = new System.Drawing.Point(825, 164);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(145, 83);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controls";
             // 
+            // updateMemBut
+            // 
+            this.updateMemBut.Location = new System.Drawing.Point(87, 48);
+            this.updateMemBut.Name = "updateMemBut";
+            this.updateMemBut.Size = new System.Drawing.Size(47, 23);
+            this.updateMemBut.TabIndex = 3;
+            this.updateMemBut.Text = "Mem";
+            this.updateMemBut.UseVisualStyleBackColor = true;
+            this.updateMemBut.Click += new System.EventHandler(this.updateMemBut_Click);
+            // 
             // ResetBut
             // 
             this.ResetBut.Location = new System.Drawing.Point(6, 48);
             this.ResetBut.Name = "ResetBut";
-            this.ResetBut.Size = new System.Drawing.Size(128, 23);
+            this.ResetBut.Size = new System.Drawing.Size(75, 23);
             this.ResetBut.TabIndex = 2;
             this.ResetBut.Text = "Reset";
             this.ResetBut.UseVisualStyleBackColor = true;
@@ -176,6 +84,7 @@
             this.RunBut.TabIndex = 1;
             this.RunBut.Text = "Run";
             this.RunBut.UseVisualStyleBackColor = true;
+            this.RunBut.Click += new System.EventHandler(this.RunBut_Click);
             // 
             // StepBut
             // 
@@ -187,47 +96,81 @@
             this.StepBut.UseVisualStyleBackColor = true;
             this.StepBut.Click += new System.EventHandler(this.StepBut_Click);
             // 
-            // actionBox
+            // registerTable
             // 
-            this.actionBox.FormattingEnabled = true;
-            this.actionBox.Location = new System.Drawing.Point(190, 12);
-            this.actionBox.Name = "actionBox";
-            this.actionBox.Size = new System.Drawing.Size(314, 225);
-            this.actionBox.TabIndex = 2;
+            this.registerTable.AllowUserToAddRows = false;
+            this.registerTable.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            this.registerTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.registerTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.registerTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.registerTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.registerTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.registerTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.registerTable.ColumnHeadersVisible = false;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Lucida Console", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.registerTable.DefaultCellStyle = dataGridViewCellStyle2;
+            this.registerTable.Location = new System.Drawing.Point(825, 12);
+            this.registerTable.Name = "registerTable";
+            this.registerTable.ReadOnly = true;
+            this.registerTable.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.registerTable.RowHeadersVisible = false;
+            this.registerTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.registerTable.Size = new System.Drawing.Size(266, 146);
+            this.registerTable.TabIndex = 0;
+            // 
+            // memoryTable
+            // 
+            this.memoryTable.AllowUserToAddRows = false;
+            this.memoryTable.AllowUserToDeleteRows = false;
+            this.memoryTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.memoryTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Lucida Console", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.memoryTable.DefaultCellStyle = dataGridViewCellStyle3;
+            this.memoryTable.Location = new System.Drawing.Point(12, 12);
+            this.memoryTable.Name = "memoryTable";
+            this.memoryTable.RowHeadersVisible = false;
+            this.memoryTable.Size = new System.Drawing.Size(807, 605);
+            this.memoryTable.TabIndex = 2;
             // 
             // DebuggerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 254);
-            this.Controls.Add(this.actionBox);
+            this.ClientSize = new System.Drawing.Size(1103, 629);
+            this.Controls.Add(this.memoryTable);
+            this.Controls.Add(this.registerTable);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Name = "DebuggerForm";
             this.Text = "DebuggerForm";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Load += new System.EventHandler(this.DebuggerForm_Load);
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.registerTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memoryTable)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label ARegLabel;
-        private System.Windows.Forms.Label BRegLabel;
-        private System.Windows.Forms.Label PCRegLabel;
-        private System.Windows.Forms.Label JRegLabel;
-        private System.Windows.Forms.Label IRegLabel;
-        private System.Windows.Forms.Label ZRegLabel;
-        private System.Windows.Forms.Label YRegLabel;
-        private System.Windows.Forms.Label XRegLabel;
-        private System.Windows.Forms.Label CRegLabel;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button ResetBut;
         private System.Windows.Forms.Button RunBut;
         private System.Windows.Forms.Button StepBut;
-        public System.Windows.Forms.ListBox actionBox;
+        private System.Windows.Forms.DataGridView registerTable;
+        private System.Windows.Forms.DataGridView memoryTable;
+        private System.Windows.Forms.Button updateMemBut;
     }
 }

@@ -12,33 +12,63 @@ namespace DebuggerCpu
 {
     public partial class DebuggerForm : Form
     {
-        private Main cpu;
-        public DebuggerForm(Main cpu)
+        private Main comInterface;
+        private Cpu cpu;
+
+        public DebuggerForm(Main comInterface)
         {
-            this.cpu = cpu;
+            this.comInterface = comInterface;
             InitializeComponent();
+        }
+
+        private void DebuggerForm_Load(object sender, EventArgs e)
+        {
+            cpu = new Cpu(comInterface.Host);
+            registerTable.DataSource = TableFactory.getRegisterTable(cpu);
+            dataGridHelper.showChanged(registerTable);
+            updateMemBut.PerformClick();
         }
 
         private void StepBut_Click(object sender, EventArgs e)
         {
             cpu.tick();
-            ARegLabel.Text = cpu.register[(int) Register.A].ToString();
-            BRegLabel.Text = cpu.register[(int) Register.B].ToString();
-            CRegLabel.Text = cpu.register[(int) Register.C].ToString();
 
-            XRegLabel.Text = cpu.register[(int) Register.X].ToString();
-            YRegLabel.Text = cpu.register[(int) Register.Y].ToString();
-            ZRegLabel.Text = cpu.register[(int) Register.Z].ToString();
+            registerTable.DataSource = null;
+            registerTable.DataSource = TableFactory.getRegisterTable(cpu);
 
-            IRegLabel.Text = cpu.register[(int) Register.I].ToString();
-            JRegLabel.Text = cpu.register[(int) Register.J].ToString();
-
-            PCRegLabel.Text = cpu.PC.ToString();
+            dataGridHelper.showChanged(registerTable);
+            memoryTable.ClearSelection();
+            if (memoryTable.ColumnCount == 0xF + 2)
+                memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0xF))].Cells[cpu.PC % 0xF].Selected = true;
         }
 
         private void ResetBut_Click(object sender, EventArgs e)
         {
+            cpu.reset();
 
+            registerTable.DataSource = null;
+            registerTable.DataSource = TableFactory.getRegisterTable(cpu);
+
+            dataGridHelper.showChanged(registerTable);
+            memoryTable.ClearSelection();
+            if (memoryTable.ColumnCount == 0xF + 2)
+                memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0xF))].Cells[cpu.PC % 0xF].Selected = true;
+        }
+
+        private void RunBut_Click(object sender, EventArgs e)
+        {
+            cpu.run();
+        }
+
+        private void updateMemBut_Click(object sender, EventArgs e)
+        {
+            memoryTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            memoryTable.DataSource = null;
+            memoryTable.DataSource = TableFactory.getMemoryTable(comInterface.Host);
+            memoryTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            memoryTable.ClearSelection();
+            memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0xF))].Cells[cpu.PC % 0xF].Selected = true;
         }
     }
 }

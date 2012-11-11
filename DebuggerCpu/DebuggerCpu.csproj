@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cpu.cs" />
+    <Compile Include="dataGridHelper.cs" />
     <Compile Include="DebuggerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -51,6 +53,7 @@
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PluginInterface\PluginInterface.csproj">
