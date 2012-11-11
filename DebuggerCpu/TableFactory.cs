@@ -54,15 +54,15 @@ namespace DebuggerCpu
         {
             DataTable table = new DataTable();
             table.Columns.Add("Addresses");
-            for (int i = 1; i < 0xF + 2; i++)
+            for (int i = 1; i <= 0xF + 1; i++)
             {
                 table.Columns.Add(string.Format("0x{0:X1}", i - 1));
             }
-            for (int i = 0; i < 0x10000; i += 0xF)
+            for (int i = 0; i < 0x10000; i += 0x10)
             {
                 var row = new string[0xF + 2];
                 row[0] = string.Format("0x{0:X4}", i);
-                for (int j = 0; j < 0xF + 1; j++)
+                for (int j = 0; j <= 0xF; j++)
                 {
                     string value = string.Format("{0:X4}", host.readMem(i + j));
                     row[j + 1] = value;

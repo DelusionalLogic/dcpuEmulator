@@ -49,7 +49,7 @@
             this.groupBox2.Controls.Add(this.ResetBut);
             this.groupBox2.Controls.Add(this.RunBut);
             this.groupBox2.Controls.Add(this.StepBut);
-            this.groupBox2.Location = new System.Drawing.Point(825, 164);
+            this.groupBox2.Location = new System.Drawing.Point(825, 199);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(145, 83);
             this.groupBox2.TabIndex = 1;
@@ -100,6 +100,8 @@
             // 
             this.registerTable.AllowUserToAddRows = false;
             this.registerTable.AllowUserToDeleteRows = false;
+            this.registerTable.AllowUserToResizeColumns = false;
+            this.registerTable.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
             this.registerTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.registerTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -122,14 +124,16 @@
             this.registerTable.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.registerTable.RowHeadersVisible = false;
             this.registerTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.registerTable.Size = new System.Drawing.Size(266, 146);
+            this.registerTable.Size = new System.Drawing.Size(266, 181);
             this.registerTable.TabIndex = 0;
             // 
             // memoryTable
             // 
             this.memoryTable.AllowUserToAddRows = false;
             this.memoryTable.AllowUserToDeleteRows = false;
-            this.memoryTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.memoryTable.AllowUserToResizeColumns = false;
+            this.memoryTable.AllowUserToResizeRows = false;
+            this.memoryTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.memoryTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;

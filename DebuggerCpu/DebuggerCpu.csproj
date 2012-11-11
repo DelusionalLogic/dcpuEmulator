@@ -52,6 +52,7 @@
       <DependentUpon>DebuggerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.cs" />
+    <Compile Include="MemTableHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableFactory.cs" />
   </ItemGroup>
