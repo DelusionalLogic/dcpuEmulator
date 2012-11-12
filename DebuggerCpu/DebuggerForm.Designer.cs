@@ -132,7 +132,6 @@
             this.registerTable.Size = new System.Drawing.Size(226, 181);
             this.registerTable.TabIndex = 0;
             this.registerTable.VirtualMode = true;
-            this.registerTable.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.registerTable_RowPrePaint);
             // 
             // memoryTable
             // 
@@ -164,7 +163,6 @@
             this.memoryTable.Size = new System.Drawing.Size(847, 605);
             this.memoryTable.TabIndex = 2;
             this.memoryTable.VirtualMode = true;
-            this.memoryTable.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.memoryTable_RowPrePaint);
             // 
             // DebuggerForm
             // 

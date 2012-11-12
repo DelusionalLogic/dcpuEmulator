@@ -24,23 +24,19 @@ namespace DebuggerCpu
         private void DebuggerForm_Load(object sender, EventArgs e)
         {
             cpu = new Cpu(comInterface.Host);
-            registerTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            registerTable.DataSource = TableFactory.getRegisterTable(cpu);
-            registerTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
-            dataGridHelper.showChanged(registerTable);
-            updateMemBut.PerformClick();
+            MemTableHelper.updateTables(registerTable, memoryTable, cpu, comInterface);
         }
 
         private void StepBut_Click(object sender, EventArgs e)
         {
             cpu.tick();
-            MemTableHelper.updateTables(registerTable, memoryTable, cpu);
+            MemTableHelper.updateTables(registerTable, memoryTable, cpu, comInterface);
         }
 
         private void ResetBut_Click(object sender, EventArgs e)
         {
             cpu.reset();
-            MemTableHelper.updateTables(registerTable, memoryTable, cpu);
+            MemTableHelper.updateTables(registerTable, memoryTable, cpu, comInterface);
         }
 
         private void RunBut_Click(object sender, EventArgs e)
@@ -50,23 +46,11 @@ namespace DebuggerCpu
 
         private void updateMemBut_Click(object sender, EventArgs e)
         {
-            memoryTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             memoryTable.DataSource = null;
             memoryTable.DataSource = TableFactory.getMemoryTable(comInterface.Host);
-            memoryTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             memoryTable.ClearSelection();
             memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0xF))].Cells[cpu.PC % 0xF].Selected = true;
-        }
-
-        private void registerTable_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-            ((DataGridView)sender).AutoResizeRow(e.RowIndex);
-        }
-
-        private void memoryTable_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-            ((DataGridView)sender).AutoResizeRow(e.RowIndex);
         }
     }
 }
