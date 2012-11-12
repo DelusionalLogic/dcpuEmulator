@@ -24,7 +24,9 @@ namespace DebuggerCpu
         private void DebuggerForm_Load(object sender, EventArgs e)
         {
             cpu = new Cpu(comInterface.Host);
+            registerTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             registerTable.DataSource = TableFactory.getRegisterTable(cpu);
+            registerTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             dataGridHelper.showChanged(registerTable);
             updateMemBut.PerformClick();
         }
@@ -55,6 +57,16 @@ namespace DebuggerCpu
 
             memoryTable.ClearSelection();
             memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0xF))].Cells[cpu.PC % 0xF].Selected = true;
+        }
+
+        private void registerTable_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            ((DataGridView)sender).AutoResizeRow(e.RowIndex);
+        }
+
+        private void memoryTable_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            ((DataGridView)sender).AutoResizeRow(e.RowIndex);
         }
     }
 }

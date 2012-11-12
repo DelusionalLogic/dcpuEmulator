@@ -19,15 +19,17 @@ namespace DebuggerCpu
             registerTable.DataSource = TableFactory.getRegisterTable(cpu);
 
             dataGridHelper.showChanged(registerTable);
-            if (memoryTable.ColumnCount == 0xF + 2)
+            int curRow = (int) Math.Floor((double) (cpu.PC/0x10)), curCell = (cpu.PC%0x10) + 1;
+
+            if (memoryTable.ColumnCount == 0x10 + 1)
             {
-                memoryTable.CurrentCell = memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0x10))].Cells[(cpu.PC % 0x10) + 1];
+                memoryTable.CurrentCell = memoryTable.Rows[curRow].Cells[curCell];
                 memoryTable.ClearSelection();
             }
-            memoryTable.Rows[(int)Math.Floor((double)(cpu.PC / 0x10))].Cells[(cpu.PC % 0x10) + 1].Style.BackColor = Color.Yellow;
+            memoryTable.Rows[curRow].Cells[curCell].Style.BackColor = Color.Yellow;
             if (lastCell != null) lastCell.Style = lastRow.DefaultCellStyle;
-            lastRow = memoryTable.Rows[(int) Math.Floor((double) (cpu.PC/0x10))];
-            lastCell = lastRow.Cells[(cpu.PC % 0x10) + 1];
+            lastRow = memoryTable.Rows[curRow];
+            lastCell = lastRow.Cells[curCell];
         }
     }
 }

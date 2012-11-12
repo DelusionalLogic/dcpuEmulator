@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.updateMemBut = new System.Windows.Forms.Button();
             this.ResetBut = new System.Windows.Forms.Button();
@@ -49,7 +50,7 @@
             this.groupBox2.Controls.Add(this.ResetBut);
             this.groupBox2.Controls.Add(this.RunBut);
             this.groupBox2.Controls.Add(this.StepBut);
-            this.groupBox2.Location = new System.Drawing.Point(825, 199);
+            this.groupBox2.Location = new System.Drawing.Point(865, 199);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(145, 83);
             this.groupBox2.TabIndex = 1;
@@ -105,7 +106,6 @@
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
             this.registerTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.registerTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.registerTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.registerTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.registerTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.registerTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -118,14 +118,21 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.registerTable.DefaultCellStyle = dataGridViewCellStyle2;
-            this.registerTable.Location = new System.Drawing.Point(825, 12);
+            this.registerTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.registerTable.Location = new System.Drawing.Point(865, 12);
             this.registerTable.Name = "registerTable";
             this.registerTable.ReadOnly = true;
             this.registerTable.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.registerTable.RowHeadersVisible = false;
             this.registerTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.registerTable.Size = new System.Drawing.Size(266, 181);
+            this.registerTable.ShowCellErrors = false;
+            this.registerTable.ShowCellToolTips = false;
+            this.registerTable.ShowEditingIcon = false;
+            this.registerTable.ShowRowErrors = false;
+            this.registerTable.Size = new System.Drawing.Size(226, 181);
             this.registerTable.TabIndex = 0;
+            this.registerTable.VirtualMode = true;
+            this.registerTable.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.registerTable_RowPrePaint);
             // 
             // memoryTable
             // 
@@ -133,21 +140,31 @@
             this.memoryTable.AllowUserToDeleteRows = false;
             this.memoryTable.AllowUserToResizeColumns = false;
             this.memoryTable.AllowUserToResizeRows = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
+            this.memoryTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.memoryTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.memoryTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Lucida Console", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.memoryTable.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.memoryTable.DefaultCellStyle = dataGridViewCellStyle4;
+            this.memoryTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.memoryTable.Location = new System.Drawing.Point(12, 12);
             this.memoryTable.Name = "memoryTable";
             this.memoryTable.RowHeadersVisible = false;
-            this.memoryTable.Size = new System.Drawing.Size(807, 605);
+            this.memoryTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.memoryTable.ShowCellErrors = false;
+            this.memoryTable.ShowCellToolTips = false;
+            this.memoryTable.ShowEditingIcon = false;
+            this.memoryTable.ShowRowErrors = false;
+            this.memoryTable.Size = new System.Drawing.Size(847, 605);
             this.memoryTable.TabIndex = 2;
+            this.memoryTable.VirtualMode = true;
+            this.memoryTable.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.memoryTable_RowPrePaint);
             // 
             // DebuggerForm
             // 

@@ -27,7 +27,6 @@ namespace PluginInterface
 
     public interface IScreen : IPlugin
     {
-        
     }
 
     public interface IPlugin

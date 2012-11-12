@@ -17,7 +17,10 @@ namespace DefaultScreen
 
         public void initialize()
         {
-            
+        }
+
+        public void start()
+        {
         }
 
         public void dispose()
@@ -38,7 +41,7 @@ namespace DefaultScreen
         }
         public string Version
         {
-            get { return "0.1"; }
+            get { return "0.0"; }
         }
         public bool configPossible
         {

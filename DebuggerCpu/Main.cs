@@ -54,27 +54,4 @@ namespace DebuggerCpu
             get { return false; }
         }
     }
-
-    public enum Register
-    {
-        A = 0,
-        B,
-        C,
-        X,
-        Y,
-        Z,
-        I,
-        J,
-    }
-
-    public enum AddressType
-    {
-        Register,
-        Ram,
-        PC,
-        SP,
-        EX,
-        IA,
-        Literal,
-    }
 }
