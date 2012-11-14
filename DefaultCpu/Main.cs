@@ -19,6 +19,10 @@ namespace DefaultCpu
         {
         }
 
+        public void step()
+        {
+        }
+
         public void dispose()
         {
         }

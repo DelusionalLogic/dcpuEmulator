@@ -10,17 +10,20 @@ namespace DefaultCpu
     {
         public Type aType { get; set; }
         public ushort address { get; set; }
+        public ushort rawValue { get; set; }
 
         public bool isA { get; set; }
 
         public ushort value { get; set; }
         public ushort signed
         {
-            get { return (ushort) ((value ^ 0xFFFF) - 0x0001); }
+            get { return (ushort) ((value ^ 0xFFFF) + 0x0001); }
         }
 
         public Address(ushort value) : this()
         {
+            rawValue = value;
+
             if (value < 0x08)
                 aType = Type.Register;
             else if (value < 0x10)
@@ -54,7 +57,7 @@ namespace DefaultCpu
             switch (aType)
             {
                 case Type.Register:
-                    return Cpu.register[address];
+                    return Cpu.register.readRegister(address);
                 case Type.Ram:
                     return Cpu.computer.readMem(address);
                 case Type.PC:
@@ -75,7 +78,7 @@ namespace DefaultCpu
             switch (aType)
             {
                 case Type.Register:
-                    Cpu.register[address] = value;
+                    Cpu.register.writeRegister(address, value);
                     break;
                 case Type.Ram:
                     Cpu.computer.writeMem(address, value);
@@ -102,9 +105,9 @@ namespace DefaultCpu
             if (value < 0x08)
                 return value;
             if (value < 0x10)
-                return Cpu.register[value - 0x08];
+                return Cpu.register.readRegister(value - 0x08);
             if (value < 0x18)
-                return (ushort)(Cpu.computer.readMem(Cpu.nextPC++) + Cpu.register[value - 0x10]);
+                return (ushort)(Cpu.computer.readMem(Cpu.nextPC++) + Cpu.register.readRegister(value - 0x10));
             if (value == 0x18)
                 if (isA)
                     return Cpu.nextSP++;

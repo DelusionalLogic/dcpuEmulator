@@ -17,6 +17,7 @@ namespace PluginInterface
     public interface ICpu : IPlugin
     {
         void start();
+        void step();
     }
 
     public interface IRam : IPlugin

@@ -25,6 +25,10 @@ namespace DebuggerCpu
             debugger.ShowDialog();
         }
 
+        public void step()
+        {
+        }
+
         public void dispose()
         {
         }
@@ -39,7 +43,7 @@ namespace DebuggerCpu
         }
         public string Description
         {
-            get { return "A cpu for debugging"; }
+            get { return "A CPU with debugger, Outdated"; }
         }
         public string Author
         {
@@ -47,7 +51,7 @@ namespace DebuggerCpu
         }
         public string Version
         {
-            get { return "0.1 (NON WORKING)"; }
+            get { return "0.5"; }
         }
         public bool configPossible
         {

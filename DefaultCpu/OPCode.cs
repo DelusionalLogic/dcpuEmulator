@@ -39,4 +39,18 @@ namespace DefaultCpu
         STI = 0x1E,
         STD = 0x1F,
     }
+
+    public enum SpecialOPCode
+    {
+        JSR = 0x01,
+        INT = 0x08,
+        IAG = 0x09,
+        IAS = 0x0A,
+        RFI = 0x0B,
+        IAQ = 0x0C,
+
+        HWN = 0x10,
+        HWQ = 0x11,
+        HWI = 0x12,
+    }
 }
