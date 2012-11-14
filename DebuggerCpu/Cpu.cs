@@ -12,7 +12,7 @@ namespace DebuggerCpu
     {
         private IPluginHost Host { get; set; }
 
-        public ushort[] register;
+        public ushort[] register = new ushort[8];
         public ushort PC;
         public ushort SP;
         public ushort EX;

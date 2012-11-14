@@ -9,10 +9,13 @@ namespace DefaultCpu
 {
     public class Main : ICpu
     {
+        public Cpu cpu;
+
         public IPluginHost Host { get; set; }
 
         public void initialize()
         {
+            cpu = new Cpu(Host);
         }
 
         public void start()
@@ -21,6 +24,17 @@ namespace DefaultCpu
 
         public void step()
         {
+            cpu.step();
+        }
+
+        public ushort[] getRegisterSnapshot()
+        {
+            return Cpu.register.toArray();
+        }
+
+        public ushort[] getSpecialRegisters()
+        {
+            return cpu.getSpecialRegisters();
         }
 
         public void dispose()

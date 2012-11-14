@@ -14,9 +14,9 @@ namespace DefaultCpu
 
         public Instruction(ushort instruction) : this()
         {
-            opCode = (OPCode) (instruction & 0x1f);
-            b = new Address((ushort)((instruction >> 5) & 0x1f));
-            a = new Address((ushort)(instruction >> 10));
+            opCode = (OPCode)(instruction & 0x1f);
+            b = new Address((ushort)((instruction >> 5) & 0x1f), false);
+            a = new Address((ushort)(instruction >> 10), true);
         }
     }
 }

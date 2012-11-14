@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using PluginInterface;
 
@@ -22,6 +23,20 @@ namespace dcpuEmulator
             this.ram = ram;
 
             loadFile(binaryPath);
+            new Thread((ThreadStart)delegate
+            {
+                while (true)
+                {
+                    string s = "";
+                    foreach (ushort register in cpu.getRegisterSnapshot())
+                    {
+                        s += register + "; ";
+                    }
+                    s += cpu.getSpecialRegisters()[0];
+                    AdvConsole.Debug(s);
+                    cpu.step();
+                }
+            }).Start();
             cpu.start();
         }
 

@@ -17,16 +17,32 @@ namespace DebuggerCpu
 
         public void initialize()
         {
+            debugger = new DebuggerForm(this);
         }
 
         public void start()
         {
-            debugger = new DebuggerForm(this);
             debugger.ShowDialog();
         }
 
         public void step()
         {
+        }
+
+        public ushort[] getRegisterSnapshot()
+        {
+            return debugger.cpu.register;
+        }
+
+        public ushort[] getSpecialRegisters()
+        {
+            return new[]
+                       {
+                           debugger.cpu.PC,
+                           debugger.cpu.SP,
+                           debugger.cpu.EX,
+                           debugger.cpu.IA,
+                       };
         }
 
         public void dispose()

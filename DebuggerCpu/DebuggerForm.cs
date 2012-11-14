@@ -13,17 +13,17 @@ namespace DebuggerCpu
     public partial class DebuggerForm : Form
     {
         private Main comInterface;
-        private Cpu cpu;
+        internal Cpu cpu;
 
         public DebuggerForm(Main comInterface)
         {
             this.comInterface = comInterface;
+            cpu = new Cpu(comInterface.Host);
             InitializeComponent();
         }
 
         private void DebuggerForm_Load(object sender, EventArgs e)
         {
-            cpu = new Cpu(comInterface.Host);
             MemTableHelper.updateTables(registerTable, memoryTable, cpu, comInterface);
         }
 

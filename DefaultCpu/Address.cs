@@ -20,8 +20,9 @@ namespace DefaultCpu
             get { return (ushort) ((value ^ 0xFFFF) + 0x0001); }
         }
 
-        public Address(ushort value) : this()
+        public Address(ushort value, bool isA) : this()
         {
+            this.isA = isA;
             rawValue = value;
 
             if (value < 0x08)
@@ -50,6 +51,7 @@ namespace DefaultCpu
                 aType = Type.Literal;
 
             address = getAddress(value);
+            this.value = read();
         }
 
         internal ushort read()
@@ -84,7 +86,7 @@ namespace DefaultCpu
                     Cpu.computer.writeMem(address, value);
                     break;
                 case Type.PC:
-                    Cpu.PC = value;
+                    Cpu.nextPC = value;
                     break;
                 case Type.SP:
                     Cpu.SP = value;
@@ -112,7 +114,7 @@ namespace DefaultCpu
                 if (isA)
                     return Cpu.nextSP++;
                 else
-                    return --Cpu.nextPC;
+                    return --Cpu.nextSP;
             if (value == 0x19)
                 return Cpu.nextSP;
             if (value == 0x1a)

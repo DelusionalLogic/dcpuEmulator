@@ -18,6 +18,8 @@ namespace PluginInterface
     {
         void start();
         void step();
+        ushort[] getRegisterSnapshot();
+        ushort[] getSpecialRegisters();
     }
 
     public interface IRam : IPlugin
