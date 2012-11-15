@@ -16,11 +16,14 @@ namespace dcpuEmulator
         private ICpu cpu;
         private IRam ram;
 
-        public void setParts(string binaryPath, IScreen screen, ICpu cpu, IRam ram)
+        private List<IHardware> hardware; 
+
+        public void setParts(string binaryPath, IScreen screen, ICpu cpu, IRam ram, List<IHardware> hardware)
         {
             this.screen = screen;
             this.cpu = cpu;
             this.ram = ram;
+            this.hardware = hardware;
 
             loadFile(binaryPath);
             new Thread((ThreadStart)delegate
@@ -33,7 +36,7 @@ namespace dcpuEmulator
                         s += register + "; ";
                     }
                     s += cpu.getSpecialRegisters()[0];
-                    AdvConsole.Debug(s);
+                    //AdvConsole.Debug(s);
                     cpu.step();
                 }
             }).Start();
@@ -42,21 +45,14 @@ namespace dcpuEmulator
 
         public void loadFile(string fileName)
         {
-            using (var sr = new StreamReader(fileName, Encoding.UTF8))
+            using (var file = File.Open(fileName, FileMode.Open))
             {
-                int addr = 0;
-                string str;
-                while ((str = sr.ReadLine()) != null)
+                int address = 0;
+                int b;
+                while ((b = file.ReadByte()) != -1)
                 {
-                    string[] words = str.Split(' ');
-
-                    foreach (var word in words)
-                    {
-                        if(word.Length != 4)
-                            continue;
-                        ushort num = ushort.Parse(word, NumberStyles.HexNumber);
-                        ram.writeMem(addr++, num);
-                    }
+                    ushort memVal = (ushort) ((b << 8) + file.ReadByte());
+                    writeMem(address++, memVal);
                 }
             }
         }

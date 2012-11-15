@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PluginInterface;
 
 namespace dcpuEmulator
 {
@@ -36,7 +37,7 @@ namespace dcpuEmulator
             AdvConsole.Log(string.Format("Screen Loaded: {0}", settings.selectedScreen.Name));
             AdvConsole.Log(string.Format("Cpu Loaded: {0}", settings.selectedCpu.Name));
             AdvConsole.Log(string.Format("Ram Loaded: {0}", settings.selectedRam.Name));
-            computer.setParts(settings.filePath, settings.selectedScreen, settings.selectedCpu, settings.selectedRam);
+            computer.setParts(settings.filePath, settings.selectedScreen, settings.selectedCpu, settings.selectedRam, new List<IHardware>());
         }
     }
 }
