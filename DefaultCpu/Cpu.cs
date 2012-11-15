@@ -42,14 +42,14 @@ namespace DefaultCpu
                 {
                     skipNext = false;
                     // Skip reading next words 
-                    if ((instr.b.rawValue >= 0x10 && instr.b.rawValue < 0x18) || instr.b.rawValue == 0x1a || instr.b.rawValue == 0x1e || instr.b.rawValue == 0x1f) // [register + next word], [SP + next word], [next word], next word
-                        nextPC++;
-                    if ((instr.a.rawValue >= 0x10 && instr.a.rawValue < 0x18) || instr.a.rawValue == 0x1a || instr.a.rawValue == 0x1e || instr.a.rawValue == 0x1f) // [register + next word], [SP + next word], [next word], next word
-                        nextPC++;
+                    //if ((instr.b.rawValue >= 0x10 && instr.b.rawValue < 0x18) || instr.b.rawValue == 0x1a || instr.b.rawValue == 0x1e || instr.b.rawValue == 0x1f) // [register + next word], [SP + next word], [next word], next word
+                        //nextPC++;
+                    //if ((instr.a.rawValue >= 0x10 && instr.a.rawValue < 0x18) || instr.a.rawValue == 0x1a || instr.a.rawValue == 0x1e || instr.a.rawValue == 0x1f) // [register + next word], [SP + next word], [next word], next word
+                        //nextPC++;
 
                     PC = nextPC;
 
-                    if (instr.opCode > (OPCode) 0x10 || instr.opCode < (OPCode) 0x17)
+                    if (instr.opCode >= (OPCode) 0x10 && instr.opCode <= (OPCode) 0x17)
                         skipNext = true;
                     return;
                 }
@@ -187,7 +187,6 @@ namespace DefaultCpu
                         break;
                 }
             }
-            Thread.Sleep(2000);
 
             PC = nextPC;
             SP = nextSP;
