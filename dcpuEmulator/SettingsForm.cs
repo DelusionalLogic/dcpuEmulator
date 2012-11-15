@@ -53,9 +53,9 @@ namespace dcpuEmulator
         {
             AdvConsole.Log("SettingsForm loaded");
 
-            screenPlugins = pluginHandler.loadPluginsInFolder<IScreen>(AppDomain.CurrentDomain.BaseDirectory + "Screen");
-            cpuPlugins = pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Cpu");
-            ramPlugins = pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Ram");
+            screenPlugins = pluginHandler.loadPluginsInFolder<IScreen>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
+            cpuPlugins = pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
+            ramPlugins = pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
 
             populateCombo(screenPlugins.ToArray(), cpuPlugins.ToArray(), ramPlugins.ToArray());
         }

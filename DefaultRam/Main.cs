@@ -9,7 +9,10 @@ namespace DefaultRam
 {
     public class Main : IRam
     {
-        private ushort[] memory = new ushort[0x10001];
+        private readonly ushort[] memory = new ushort[0x10000];
+
+        private readonly object ramReadLock = new object();
+        private readonly object ramWriteLock = new object();
 
         public IPluginHost Host { get; set; }
 
@@ -23,15 +26,21 @@ namespace DefaultRam
 
         public ushort readMem(int address)
         {
-            if(address < memory.Length)
-                return memory[address];
-            return 0;
+            lock (ramReadLock)
+            {
+                if (address < memory.Length)
+                    return memory[address];
+                return 0;
+            }
         }
 
         public void writeMem(int address, ushort value)
         {
-            if(address < memory.Length)
-                memory[address] = value;
+            lock (ramWriteLock)
+            {
+                if (address < memory.Length)
+                    memory[address] = value;
+            }
         }
 
         public void dispose()

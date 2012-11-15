@@ -27,7 +27,11 @@ namespace dcpuEmulator
                 var file = new FileInfo(fileName);
 
                 if(file.Extension == ".dll")
-                    pluginList.Add(loadPlugin<T>(fileName));
+                {
+                    var plugin = loadPlugin<T>(fileName);
+                    if (plugin != null)
+                        pluginList.Add(plugin);
+                }
             }
             AdvConsole.Log(string.Format("Loaded {0} plugins of type {1}", pluginList.Count, typeof(T)));
             return pluginList;
@@ -41,9 +45,9 @@ namespace dcpuEmulator
             {
                 if(type.IsPublic && !type.IsAbstract)
                 {
+                    System.Type pluginType = typeof (T);
                     //Gets a type object of the interface we need the plugins to match
-					Type typeInterface = type.GetInterface("PluginInterface.IPlugin", true);
-						
+					Type typeInterface = type.GetInterface(string.Format("{0}", pluginType), true);
 					//Make sure the interface we want to use actually exists
                     if (typeInterface != null)
                     {
@@ -51,7 +55,7 @@ namespace dcpuEmulator
 
                         ((IPlugin) plugin).Host = computer;
                         ((IPlugin) plugin).initialize();
-
+                        AdvConsole.Log("hello");
                         return plugin;
                     }
                 }
