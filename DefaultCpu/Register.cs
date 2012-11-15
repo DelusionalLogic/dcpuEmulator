@@ -77,5 +77,10 @@ namespace DefaultCpu
         {
             return new[] {A, B, C, X, Y, Z, I, J};
         }
+
+        public void fromArray(ushort[] registers)
+        {
+            A = registers[0]; B = registers[1]; C = registers[2]; X = registers[3]; Y = registers[4]; Z = registers[5]; I = registers[6]; J = registers[7];
+        }
     }
 }

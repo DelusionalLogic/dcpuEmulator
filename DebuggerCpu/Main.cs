@@ -45,6 +45,11 @@ namespace DebuggerCpu
                        };
         }
 
+        public void interrupt(ushort message)
+        {
+            throw new NotImplementedException();
+        }
+
         public void dispose()
         {
         }

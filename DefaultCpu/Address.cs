@@ -30,23 +30,35 @@ namespace DefaultCpu
             else if (value < 0x10)
                 aType = Type.Ram;
             else if (value < 0x18)
+            {
                 aType = Type.Ram;
+                Cpu.cycles += 1;
+            }
             else if (value == 0x18)
                 aType = Type.Ram;
             else if (value == 0x19)
                 aType = Type.Ram;
             else if (value == 0x1a)
+            {
                 aType = Type.Ram;
+                Cpu.cycles += 1;
+            }
             else if (value == 0x1b)
                 aType = Type.SP;
-            else  if (value == 0x1c)
+            else if (value == 0x1c)
                 aType = Type.PC;
             else if (value == 0x1d)
                 aType = Type.EX;
             else if (value == 0x1e)
+            {
                 aType = Type.Ram;
+                Cpu.cycles += 1;
+            }
             else if (value == 0x1f)
+            {
                 aType = Type.Ram;
+                Cpu.cycles += 1;
+            }
             else
                 aType = Type.Literal;
 

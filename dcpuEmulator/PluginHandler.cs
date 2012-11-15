@@ -20,7 +20,6 @@ namespace dcpuEmulator
 
         public List<T> loadPluginsInFolder<T>(string path)
         {
-            AdvConsole.Log(string.Format("Loading plugins in {0}", path));
             var pluginList = new List<T>();
             foreach (var fileName in Directory.GetFiles(path))
             {
@@ -33,19 +32,19 @@ namespace dcpuEmulator
                         pluginList.Add(plugin);
                 }
             }
-            AdvConsole.Log(string.Format("Loaded {0} plugins of type {1}", pluginList.Count, typeof(T)));
+            AdvConsole.Log(string.Format("Loaded {0} plugins of type {1}", pluginList.Count, typeof(T).Name));
             return pluginList;
         }
 
         public T loadPlugin<T>(string path)
         {
             Assembly assembly = Assembly.LoadFrom(path);
+            Type pluginType = typeof(T);
 
             foreach (Type type in assembly.GetTypes())
             {
                 if(type.IsPublic && !type.IsAbstract)
                 {
-                    System.Type pluginType = typeof (T);
                     //Gets a type object of the interface we need the plugins to match
 					Type typeInterface = type.GetInterface(string.Format("{0}", pluginType), true);
 					//Make sure the interface we want to use actually exists
@@ -55,7 +54,6 @@ namespace dcpuEmulator
 
                         ((IPlugin) plugin).Host = computer;
                         ((IPlugin) plugin).initialize();
-                        AdvConsole.Log("hello");
                         return plugin;
                     }
                 }

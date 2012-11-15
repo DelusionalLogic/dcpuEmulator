@@ -71,6 +71,21 @@ namespace dcpuEmulator
             ram.writeMem(address, value);
         }
 
+        public List<IHardware> getDeviceList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort[] interrupt(ushort[] registers)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void interruptCPU(ushort message)
+        {
+            throw new NotImplementedException();
+        }
+
         public void dump(string message)
         {
             AdvConsole.Log(message);

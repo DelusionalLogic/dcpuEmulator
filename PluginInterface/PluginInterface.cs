@@ -11,6 +11,10 @@ namespace PluginInterface
         ushort readMem(int address);
         void writeMem(int address, ushort value);
 
+        List<IHardware> getDeviceList();
+        ushort[] interrupt(ushort[] registers);
+        void interruptCPU(ushort message);
+
         void dump(string message);
     }
 
@@ -18,8 +22,11 @@ namespace PluginInterface
     {
         void start();
         void step();
+
         ushort[] getRegisterSnapshot();
         ushort[] getSpecialRegisters();
+
+        void interrupt(ushort message);
     }
 
     public interface IRam : IPlugin
@@ -30,6 +37,15 @@ namespace PluginInterface
 
     public interface IScreen : IPlugin
     {
+    }
+
+    public interface IHardware : IPlugin
+    {
+        ushort[] interrupt(ushort[] registers);
+
+        uint ID { get; }
+        ushort HVersion { get; }
+        uint ManufacturerID { get; }
     }
 
     public interface IPlugin

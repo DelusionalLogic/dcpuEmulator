@@ -37,6 +37,11 @@ namespace DefaultCpu
             return cpu.getSpecialRegisters();
         }
 
+        public void interrupt(ushort message)
+        {
+            cpu.interruptQueue.Enqueue(message);
+        }
+
         public void dispose()
         {
         }
