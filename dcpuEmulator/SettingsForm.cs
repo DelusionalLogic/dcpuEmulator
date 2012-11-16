@@ -25,11 +25,6 @@ namespace dcpuEmulator
         private readonly PluginHandler pluginHandler;
 
         public string filePath = "";
-
-        public IScreen selectedScreen
-        {
-            get { return screenPlugins[screenBox.SelectedIndex]; }
-        }
         public ICpu selectedCpu
         {
             get { return cpuPlugins[cpuBox.SelectedIndex]; }
@@ -39,35 +34,44 @@ namespace dcpuEmulator
             get { return ramPlugins[ramBox.SelectedIndex]; }
         }
 
+        public List<IHardware> selectedHardware
+        {
+            get
+            {
+                return (from int hardwareIndex in hardwareBox.SelectedIndices select hardwareList[hardwareIndex]).ToList();
+            }
+        }
+
         public SettingsForm(PluginHandler pluginHandler)
         {
             this.pluginHandler = pluginHandler;
             InitializeComponent();
         }
 
-        private List<IScreen> screenPlugins;
         private List<ICpu> cpuPlugins;
-        private List<IRam> ramPlugins; 
+        private List<IRam> ramPlugins;
+        private List<IHardware> hardwareList;  
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             AdvConsole.Log("SettingsForm loaded");
 
-            screenPlugins = pluginHandler.loadPluginsInFolder<IScreen>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
             cpuPlugins = pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
             ramPlugins = pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
+            hardwareList =
+                pluginHandler.loadPluginsInFolder<IHardware>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
 
-            populateCombo(screenPlugins.ToArray(), cpuPlugins.ToArray(), ramPlugins.ToArray());
+            populateCombo(cpuPlugins.ToArray(), ramPlugins.ToArray());
+
+            foreach (var hardware in hardwareList)
+            {
+                hardwareBox.Items.Add(string.Format("{0} - {1} [{2}]", hardware.Name, hardware.Author, hardware.Version));
+            }
         }
 
-        private void populateCombo(IScreen[] screens, ICpu[] cpus, IRam[] rams)
+        private void populateCombo(ICpu[] cpus, IRam[] rams)
         {
             const string listSetup = "{0} - {1} [{2}]";
-            foreach (var screen in screens)
-            {
-                screenBox.Items.Add(string.Format(listSetup, screen.Name, screen.Author, screen.Version));
-            }
-            screenBox.SelectedIndex = 0;
             foreach (var cpu in cpus)
             {
                 cpuBox.Items.Add(string.Format(listSetup, cpu.Name, cpu.Author, cpu.Version));
@@ -94,11 +98,6 @@ namespace dcpuEmulator
             Hide();
             onSetupComplete(new EventArgs());
             Close();
-        }
-
-        private void screenBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            configScreenBut.Enabled = selectedScreen.configPossible;
         }
 
         private void cpuBox_SelectedIndexChanged(object sender, EventArgs e)

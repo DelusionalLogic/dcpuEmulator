@@ -37,8 +37,6 @@ namespace DefaultCpu
 
             var instr = new Instruction(computer.readMem(PC));
 
-            int result = 0;
-
             if (instr.opCode != OPCode.SPECIAL)
             {
                 if(skipNext)
@@ -59,6 +57,7 @@ namespace DefaultCpu
                     }
                     return;
                 }
+                int result = 0;
                 switch (instr.opCode)
                 {
                     case OPCode.SET:

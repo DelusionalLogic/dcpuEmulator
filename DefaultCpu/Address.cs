@@ -9,18 +9,18 @@ namespace DefaultCpu
     public struct Address
     {
         public Type aType { get; set; }
-        public ushort address { get; set; }
+        public ushort address { get { return getAddress(rawValue); } }
         public ushort rawValue { get; set; }
 
         public bool isA { get; set; }
 
-        public ushort value { get; set; }
+        public ushort value { get { return read(); } }
         public ushort signed
         {
             get { return (ushort) ((value ^ 0xFFFF) + 0x0001); }
         }
 
-        public Address(ushort value, bool isA) : this()
+        public Address(ushort value, bool isA, bool isSpecial = false) : this()
         {
             this.isA = isA;
             rawValue = value;
@@ -61,9 +61,6 @@ namespace DefaultCpu
             }
             else
                 aType = Type.Literal;
-
-            address = getAddress(value);
-            this.value = read();
         }
 
         internal ushort read()

@@ -12,15 +12,13 @@ namespace dcpuEmulator
 {
     public class Computer : IPluginHost
     {
-        private IScreen screen;
         private ICpu cpu;
         private IRam ram;
 
         private List<IHardware> hardware; 
 
-        public void setParts(string binaryPath, IScreen screen, ICpu cpu, IRam ram, List<IHardware> hardware)
+        public void setParts(string binaryPath, ICpu cpu, IRam ram, List<IHardware> hardware)
         {
-            this.screen = screen;
             this.cpu = cpu;
             this.ram = ram;
             this.hardware = hardware;
@@ -28,15 +26,15 @@ namespace dcpuEmulator
             loadFile(binaryPath);
             new Thread((ThreadStart)delegate
             {
+                for (int i = 0; i < 10; i++)
+                {
+                    AdvConsole.Log(readMem(i));
+                }
                 while (true)
                 {
-                    string s = "";
-                    foreach (ushort register in cpu.getRegisterSnapshot())
-                    {
-                        s += register + "; ";
-                    }
+                    string s = cpu.getRegisterSnapshot().Aggregate("", (current, register) => current + (register + "; "));
                     s += cpu.getSpecialRegisters()[0];
-                    //AdvConsole.Debug(s);
+                    AdvConsole.Debug(s);
                     cpu.step();
                 }
             }).Start();
@@ -69,17 +67,12 @@ namespace dcpuEmulator
 
         public List<IHardware> getDeviceList()
         {
-            throw new NotImplementedException();
-        }
-
-        public ushort[] interrupt(ushort[] registers)
-        {
-            throw new NotImplementedException();
+            return hardware;
         }
 
         public void interruptCPU(ushort message)
         {
-            throw new NotImplementedException();
+            cpu.interrupt(message);
         }
 
         public void dump(string message)

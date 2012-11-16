@@ -53,7 +53,6 @@ namespace dcpuEmulator
                         var plugin = (T) Activator.CreateInstance(assembly.GetType(type.ToString()));
 
                         ((IPlugin) plugin).Host = computer;
-                        ((IPlugin) plugin).initialize();
                         return plugin;
                     }
                 }

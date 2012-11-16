@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,13 +32,17 @@ namespace dcpuEmulator
 
         public static void setupComplete(object sender, EventArgs e)
         {
-            SettingsForm settings = (SettingsForm) sender;
+            var settings = (SettingsForm) sender;
             AdvConsole.Log("Setting dialog complete");
             AdvConsole.Log(string.Format("Binary path: {0}", settings.filePath));
-            AdvConsole.Log(string.Format("Screen Loaded: {0}", settings.selectedScreen.Name));
             AdvConsole.Log(string.Format("Cpu Loaded: {0}", settings.selectedCpu.Name));
             AdvConsole.Log(string.Format("Ram Loaded: {0}", settings.selectedRam.Name));
-            computer.setParts(settings.filePath, settings.selectedScreen, settings.selectedCpu, settings.selectedRam, new List<IHardware>());
+            settings.selectedCpu.initialize(); settings.selectedRam.initialize();
+            foreach (var hardware in settings.selectedHardware)
+            {
+                hardware.initialize();
+            }
+            computer.setParts(settings.filePath, settings.selectedCpu, settings.selectedRam, settings.selectedHardware);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace PluginInterface
         void writeMem(int address, ushort value);
 
         List<IHardware> getDeviceList();
-        ushort[] interrupt(ushort[] registers);
         void interruptCPU(ushort message);
 
         void dump(string message);
@@ -33,10 +32,6 @@ namespace PluginInterface
     {
         ushort readMem(int address);
         void writeMem(int address, ushort value);
-    }
-
-    public interface IScreen : IPlugin
-    {
     }
 
     public interface IHardware : IPlugin
