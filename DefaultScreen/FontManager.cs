@@ -8,9 +8,32 @@ namespace DefaultScreen
 {
     internal class FontManager
     {
-        public static uint getChar(ushort id)
+        private static ushort address = 0;
+
+        internal static uint getChar(ushort id)
         {
-            return DefaultFont[id];
+            if(address == 0)
+                return DefaultFont[id];
+            uint font = 0;
+            font = ScreenGui.computer.readMem(address + id);
+            font = (font << 16) + ScreenGui.computer.readMem(address + id + 1);
+            return font;
+        }
+
+        internal static void mapFont(ushort newAddress)
+        {
+            address = newAddress;
+        }
+
+        internal static void dumpFont(ushort address)
+        {
+            foreach (var letter in DefaultFont)
+            {
+                var word1 = (ushort)(letter & 0xFFFF);
+                ScreenGui.computer.writeMem(address++, word1);
+                var word2 = (ushort)((letter >> 16) & 0xFFFF);
+                ScreenGui.computer.writeMem(address++, word1);
+            }
         }
 
         private static readonly uint[] DefaultFont = new uint[]

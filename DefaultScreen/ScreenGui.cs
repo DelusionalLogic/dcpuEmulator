@@ -13,14 +13,14 @@ namespace DefaultScreen
 {
     public partial class ScreenGui : Form
     {
-        private readonly IPluginHost computer;
+        public static IPluginHost computer;
 
         private Character[] characters;
         private int memMap = 0;
 
         public ScreenGui(IPluginHost computer)
         {
-            this.computer = computer;
+            ScreenGui.computer = computer;
             characters = new Character[384]; // Screensize
             for (int i = 0; i < characters.Length; i++)
             {
@@ -35,8 +35,22 @@ namespace DefaultScreen
             switch (registers[0]) // register A
             {
                 case 0x0: //MEM_MAP_SCREEN
-                    int newAdd = registers[1]; // register B
-                    memMap = newAdd;
+                    memMap = registers[1]; //Register B
+                    break;
+                case 0x1: //MEM_MAP_FONT
+                    FontManager.mapFont(registers[1]); //Register B
+                    break;
+                case 0x2: //MEM_MAP_PALETTE
+                    ColorManager.mapPalette(registers[1]); //Register B
+                    break;
+                case 0x3:
+                    //TODO: Add bordercolor and set it here
+                    break;
+                case 0x4: //MEM_DUMP_FONT
+                    FontManager.dumpFont(registers[1]); // Register B
+                    break;
+                case 0x5: //MEM_DUMP_PALETTE
+                    ColorManager.dumpPalette(registers[1]); //Register B
                     break;
             }
             return registers;
