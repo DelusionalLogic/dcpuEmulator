@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultRam", "DefaultRam\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebuggerCpu", "DebuggerCpu\DebuggerCpu.csproj", "{6A37A7B5-0B27-47F0-81F4-10136C02E5CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generic Keyboard", "Generic Keyboard\Generic Keyboard.csproj", "{A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{6A37A7B5-0B27-47F0-81F4-10136C02E5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A37A7B5-0B27-47F0-81F4-10136C02E5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A37A7B5-0B27-47F0-81F4-10136C02E5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

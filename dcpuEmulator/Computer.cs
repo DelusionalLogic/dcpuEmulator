@@ -32,9 +32,10 @@ namespace dcpuEmulator
                 }
                 while (true)
                 {
-                    string s = cpu.getRegisterSnapshot().Aggregate("", (current, register) => current + (register + "; "));
-                    s += cpu.getSpecialRegisters()[0];
-                    AdvConsole.Debug(s);
+                    //string s = cpu.getRegisterSnapshot().Aggregate("", (current, register) => current + (register + "; "));
+                    //s += cpu.getSpecialRegisters()[0];
+                    //AdvConsole.Debug(s);
+                    Thread.Sleep(1);
                     cpu.step();
                 }
             }).Start();

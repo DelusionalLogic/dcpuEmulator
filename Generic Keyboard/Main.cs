@@ -11,6 +11,8 @@ namespace Generic_Keyboard
     {
         public IPluginHost Host { get; set; }
 
+        private Keyboard keyboard;
+
         public bool configPossible { get { return false; } }
 
         public void openConfig()
@@ -19,10 +21,12 @@ namespace Generic_Keyboard
 
         public void initialize()
         {
+            keyboard = new Keyboard(Host);
         }
 
         public ushort[] interrupt(ushort[] registers)
         {
+            return keyboard.interrupt(registers);
         }
 
         public void dispose()

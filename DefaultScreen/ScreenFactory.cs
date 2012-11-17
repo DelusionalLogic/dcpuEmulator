@@ -44,15 +44,14 @@ namespace DefaultScreen
         public static Image createScreen(Character[] characters, int width, int height)
         {
             Bitmap source = createScreen(characters);
-            Size size = new Size(width, height);
-            Bitmap dest = new Bitmap(size.Width, size.Height);
+            var dest = new Bitmap(width, height);
 
             using(Graphics g = Graphics.FromImage(dest))
             {
                 g.SmoothingMode = SmoothingMode.None;
                 g.InterpolationMode = InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = PixelOffsetMode.Half;
-                g.DrawImage(source,new Rectangle(0,0, size.Width, size.Height));
+                g.DrawImage(source,new Rectangle(0,0, width, height));
             }
             return dest;
         }

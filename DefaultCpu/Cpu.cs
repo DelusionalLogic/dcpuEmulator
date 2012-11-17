@@ -246,13 +246,24 @@ namespace DefaultCpu
                         cycles += 2;
                         break;
                     case SpecialOPCode.HWQ:
-                        hardware = computer.getDeviceList()[instr.a.value];
-                        register.A = (ushort) (hardware.ID & 0xFFFF);
-                        register.B = (ushort) ((hardware.ID >> 16) & 0xFFFF);
-                        register.C = hardware.HVersion;
-                        register.X = (ushort) (hardware.ManufacturerID & 0xFFFF);
-                        register.Y = (ushort) ((hardware.ManufacturerID >> 16) & 0xFFFF);
-                        cycles += 4;
+                        try
+                        {
+                            hardware = computer.getDeviceList()[instr.a.value];
+                            register.A = (ushort) (hardware.ID & 0xFFFF);
+                            register.B = (ushort) ((hardware.ID >> 16) & 0xFFFF);
+                            register.C = hardware.HVersion;
+                            register.X = (ushort) (hardware.ManufacturerID & 0xFFFF);
+                            register.Y = (ushort) ((hardware.ManufacturerID >> 16) & 0xFFFF);
+                            cycles += 4;
+                        }catch(ArgumentOutOfRangeException e)
+                        {
+                            register.A = 0;
+                            register.B = 0;
+                            register.C = 0;
+                            register.X = 0;
+                            register.Y = 0;
+                            cycles += 4;
+                        }
                         break;
                     case SpecialOPCode.HWI:
                         hardware = computer.getDeviceList()[instr.a.value];

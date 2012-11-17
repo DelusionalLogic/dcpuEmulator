@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using PluginInterface;
+using Utilities;
+
+namespace Generic_Keyboard
+{
+    class Keyboard
+    {
+        internal static IPluginHost computer;
+
+        internal static Queue<ushort> keyBuffer = new Queue<ushort>();
+        internal static ushort message = 0x0;
+
+        public Keyboard(IPluginHost computer)
+        {
+            Keyboard.computer = computer;
+            KeyManager.installHooks();
+        }
+
+        public ushort[] interrupt(ushort[] registers)
+        {
+            switch (registers[0]) //Register A
+            {
+                case 0x0: //CLEAR_BUFFER
+                    keyBuffer.Clear();
+                    break;
+                case 0x1: //GETKEY
+                    registers[2] = keyBuffer.Dequeue(); //Register C
+                    break;
+            }
+            return registers;
+        }
+    }
+}
