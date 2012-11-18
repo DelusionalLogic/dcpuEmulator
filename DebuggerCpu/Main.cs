@@ -45,6 +45,11 @@ namespace DebuggerCpu
                        };
         }
 
+        public long getCycles()
+        {
+            throw new NotImplementedException();
+        }
+
         public void interrupt(ushort message)
         {
             throw new NotImplementedException();

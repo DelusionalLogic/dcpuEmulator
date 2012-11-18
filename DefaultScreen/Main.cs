@@ -35,6 +35,7 @@ namespace DefaultScreen
 
         public ushort[] interrupt(ushort[] registers)
         {
+            while (screen == null) ;
             return screen.interrupt(registers);
         }
 

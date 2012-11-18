@@ -24,6 +24,7 @@ namespace PluginInterface
 
         ushort[] getRegisterSnapshot();
         ushort[] getSpecialRegisters();
+        long getCycles();
 
         void interrupt(ushort message);
     }

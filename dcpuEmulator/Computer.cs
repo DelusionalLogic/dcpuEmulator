@@ -26,19 +26,22 @@ namespace dcpuEmulator
             loadFile(binaryPath);
             new Thread((ThreadStart)delegate
             {
-                for (int i = 0; i < 10; i++)
-                {
-                    AdvConsole.Log(readMem(i));
-                }
                 while (true)
                 {
-                    //string s = cpu.getRegisterSnapshot().Aggregate("", (current, register) => current + (register + "; "));
-                    //s += cpu.getSpecialRegisters()[0];
-                    //AdvConsole.Debug(s);
                     Thread.Sleep(1);
                     cpu.step();
                 }
             }).Start();
+            new Thread((ThreadStart)delegate
+                                        {
+                                            while (true)
+                                            {
+                                                string s = cpu.getRegisterSnapshot().Aggregate("", (current, register) => current + (register + "; "));
+                                                s += cpu.getSpecialRegisters()[0] + "; " + cpu.getSpecialRegisters()[2] + "; ";
+                                                s += cpu.getCycles();
+                                                AdvConsole.Debug(s);
+                                            }
+                                        }).Start();
             cpu.start();
         }
 

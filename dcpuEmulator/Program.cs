@@ -37,11 +37,11 @@ namespace dcpuEmulator
             AdvConsole.Log(string.Format("Binary path: {0}", settings.filePath));
             AdvConsole.Log(string.Format("Cpu Loaded: {0}", settings.selectedCpu.Name));
             AdvConsole.Log(string.Format("Ram Loaded: {0}", settings.selectedRam.Name));
-            settings.selectedCpu.initialize(); settings.selectedRam.initialize();
             foreach (var hardware in settings.selectedHardware)
             {
                 hardware.initialize();
             }
+            settings.selectedCpu.initialize(); settings.selectedRam.initialize();
             computer.setParts(settings.filePath, settings.selectedCpu, settings.selectedRam, settings.selectedHardware);
         }
     }
