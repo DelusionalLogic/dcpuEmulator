@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace dcpuEmulator
 
         private List<IHardware> hardware; 
 
-        public void setParts(string binaryPath, ICpu cpu, IRam ram, List<IHardware> hardware)
+        public void setParts(string binaryPath, ICpu cpu, IRam ram, ITimer timing, List<IHardware> hardware)
         {
             this.cpu = cpu;
             this.ram = ram;
@@ -25,24 +26,15 @@ namespace dcpuEmulator
 
             loadFile(binaryPath);
             new Thread((ThreadStart)delegate
-            {
-                while (true)
-                {
-                    Thread.Sleep(1);
-                    cpu.step();
-                }
-            }).Start();
-            new Thread((ThreadStart)delegate
                                         {
                                             while (true)
                                             {
                                                 string s = cpu.getRegisterSnapshot().Aggregate("", (current, register) => current + (register + "; "));
-                                                s += cpu.getSpecialRegisters()[0] + "; " + cpu.getSpecialRegisters()[2] + "; ";
-                                                s += cpu.getCycles();
+                                                s += cpu.getSpecialRegisters()[0] + "; ";
                                                 AdvConsole.Debug(s);
                                             }
                                         }).Start();
-            cpu.start();
+            timing.start();
         }
 
         public void loadFile(string fileName)
@@ -77,6 +69,11 @@ namespace dcpuEmulator
         public void interruptCPU(ushort message)
         {
             cpu.interrupt(message);
+        }
+
+        public ICpu getCPU()
+        {
+            return cpu;
         }
 
         public void dump(string message)

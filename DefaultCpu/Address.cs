@@ -114,6 +114,10 @@ namespace DefaultCpu
 
         internal void write(int value)
         {
+            if (rawValue == 0x0007)
+            {
+                int a = 0;
+            }
             write((ushort) (value & 0xFFFF));
         }
 

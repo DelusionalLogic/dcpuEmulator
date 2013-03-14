@@ -25,7 +25,7 @@ namespace DebuggerCpu
             debugger.ShowDialog();
         }
 
-        public void step()
+        public void tick()
         {
         }
 

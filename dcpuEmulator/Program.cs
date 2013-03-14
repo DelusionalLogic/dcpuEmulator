@@ -42,7 +42,7 @@ namespace dcpuEmulator
                 hardware.initialize();
             }
             settings.selectedCpu.initialize(); settings.selectedRam.initialize();
-            computer.setParts(settings.filePath, settings.selectedCpu, settings.selectedRam, settings.selectedHardware);
+            computer.setParts(settings.filePath, settings.selectedCpu, settings.selectedRam, settings.selectedTimer, settings.selectedHardware);
         }
     }
 }

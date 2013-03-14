@@ -14,13 +14,14 @@ namespace PluginInterface
         List<IHardware> getDeviceList();
         void interruptCPU(ushort message);
 
+        ICpu getCPU();
+
         void dump(string message);
     }
 
     public interface ICpu : IPlugin
     {
-        void start();
-        void step();
+        void tick();
 
         ushort[] getRegisterSnapshot();
         ushort[] getSpecialRegisters();
@@ -33,6 +34,11 @@ namespace PluginInterface
     {
         ushort readMem(int address);
         void writeMem(int address, ushort value);
+    }
+
+    public interface ITimer : IPlugin
+    {
+        void start();
     }
 
     public interface IHardware : IPlugin

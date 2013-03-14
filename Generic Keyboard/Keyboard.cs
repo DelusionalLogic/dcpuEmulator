@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PluginInterface;
-using Utilities;
 
 namespace Generic_Keyboard
 {
@@ -29,7 +28,10 @@ namespace Generic_Keyboard
                     keyBuffer.Clear();
                     break;
                 case 0x1: //GETKEY
-                    registers[2] = keyBuffer.Dequeue(); //Register C
+                    if (keyBuffer.Count > 0)
+                        registers[2] = keyBuffer.Dequeue(); //Register C
+                    else
+                        registers[2] = 0; //Register C
                     break;
             }
             return registers;

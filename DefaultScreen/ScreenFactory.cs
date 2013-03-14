@@ -37,7 +37,7 @@ namespace DefaultScreen
                 }
                 i++;
             }
-            screen.Save("bitmap.png", ImageFormat.Png);
+            //screen.Save("bitmap.png", ImageFormat.Png);
             return screen;
         }
 

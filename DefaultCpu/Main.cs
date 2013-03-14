@@ -18,11 +18,7 @@ namespace DefaultCpu
             cpu = new Cpu(Host);
         }
 
-        public void start()
-        {
-        }
-
-        public void step()
+        public void tick()
         {
             cpu.step();
         }

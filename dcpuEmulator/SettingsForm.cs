@@ -33,12 +33,17 @@ namespace dcpuEmulator
         {
             get { return ramPlugins[ramBox.SelectedIndex]; }
         }
+        public ITimer selectedTimer
+        {
+            get { return timerPlugins[timerBox.SelectedIndex]; }
+        }
+
 
         public List<IHardware> selectedHardware
         {
             get
             {
-                return (from int hardwareIndex in hardwareBox.SelectedIndices select hardwareList[hardwareIndex]).ToList();
+                return (from int hardwareIndex in hardwareBox.CheckedIndices select hardwareList[hardwareIndex]).ToList();
             }
         }
 
@@ -50,6 +55,7 @@ namespace dcpuEmulator
 
         private List<ICpu> cpuPlugins;
         private List<IRam> ramPlugins;
+        private List<ITimer> timerPlugins; 
         private List<IHardware> hardwareList;  
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -58,10 +64,11 @@ namespace dcpuEmulator
 
             cpuPlugins = pluginHandler.loadPluginsInFolder<ICpu>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
             ramPlugins = pluginHandler.loadPluginsInFolder<IRam>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
+            timerPlugins = pluginHandler.loadPluginsInFolder<ITimer>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
             hardwareList =
                 pluginHandler.loadPluginsInFolder<IHardware>(AppDomain.CurrentDomain.BaseDirectory + "Plugins");
 
-            populateCombo(cpuPlugins.ToArray(), ramPlugins.ToArray());
+            populateCombo(cpuPlugins.ToArray(), ramPlugins.ToArray(), timerPlugins.ToArray());
 
             foreach (var hardware in hardwareList)
             {
@@ -69,7 +76,7 @@ namespace dcpuEmulator
             }
         }
 
-        private void populateCombo(ICpu[] cpus, IRam[] rams)
+        private void populateCombo(ICpu[] cpus, IRam[] rams, ITimer[] timers)
         {
             const string listSetup = "{0} - {1} [{2}]";
             foreach (var cpu in cpus)
@@ -82,6 +89,11 @@ namespace dcpuEmulator
                 ramBox.Items.Add(string.Format(listSetup, ram.Name, ram.Author, ram.Version));
             }
             ramBox.SelectedIndex = 0;
+            foreach (var timer in timers)
+            {
+                timerBox.Items.Add(string.Format(listSetup, timer.Name, timer.Author, timer.Version));
+            }
+            timerBox.SelectedIndex = 0;
         }
 
         private void browseBut_Click(object sender, EventArgs e)
