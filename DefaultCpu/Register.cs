@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DefaultCpu
+﻿namespace DefaultCpu
 {
+    /// <summary>
+    /// Register manager
+    /// </summary>
     public struct Register
     {
         public ushort A;
@@ -17,6 +14,11 @@ namespace DefaultCpu
         public ushort I;
         public ushort J;
 
+        /// <summary>
+        /// Reads a register
+        /// </summary>
+        /// <param name="index">The index of the register</param>
+        /// <returns>Value of the register</returns>
         public ushort readRegister(int index)
         {
             switch (index)
@@ -42,6 +44,11 @@ namespace DefaultCpu
             }
         }
 
+        /// <summary>
+        /// Writes to a register
+        /// </summary>
+        /// <param name="index">The index of the register</param>
+        /// <param name="value">The value</param>
         public void writeRegister(int index, ushort value)
         {
             switch (index)
@@ -73,11 +80,19 @@ namespace DefaultCpu
             }
         }
 
+        /// <summary>
+        /// Convert the registers to an array
+        /// </summary>
+        /// <returns>The registers as an array</returns>
         public ushort[] toArray()
         {
             return new[] {A, B, C, X, Y, Z, I, J};
         }
 
+        /// <summary>
+        /// Import the registers from an array
+        /// </summary>
+        /// <param name="registers">The register array to import</param>
         public void fromArray(ushort[] registers)
         {
             A = registers[0]; B = registers[1]; C = registers[2]; X = registers[3]; Y = registers[4]; Z = registers[5]; I = registers[6]; J = registers[7];

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using PluginInterface;
 
 namespace DefaultTimer
@@ -22,7 +18,7 @@ namespace DefaultTimer
             {
                 while (true)
                 {
-                    DateTime dateTime = new DateTime();
+                    var dateTime = new DateTime();
                     if(((dateTime.Ticks / 10) * 10) / (Host.getCPU().getCycles()+1) > 100000)
                         Thread.Sleep(1);
                     Host.getCPU().tick();

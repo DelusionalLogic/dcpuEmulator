@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using PluginInterface;
+﻿using PluginInterface;
 
 namespace DefaultCpu
 {
+    /// <summary>
+    /// The cpu plugin interface
+    /// </summary>
     public class Main : ICpu
     {
         public Cpu cpu;
@@ -65,7 +63,7 @@ namespace DefaultCpu
         }
         public string Version
         {
-            get { return "0.0(Not Started)"; }
+            get { return "0.9"; }
         }
         public bool configPossible
         {

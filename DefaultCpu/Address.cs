@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DefaultCpu
+﻿namespace DefaultCpu
 {
+    /// <summary>
+    /// A decoded cpu value
+    /// </summary>
     public struct Address
     {
         public Type aType { get; set; }
@@ -21,6 +18,12 @@ namespace DefaultCpu
             get { return (ushort) ((value ^ 0xFFFF) + 0x0001); }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Address"/> struct.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="isA">if set to <c>true</c> [is A].</param>
+        /// <param name="isSpecial">if set to <c>true</c> [is special].</param>
         public Address(ushort value, bool isA, bool isSpecial = false) : this()
         {
             this.isA = isA;
@@ -69,6 +72,10 @@ namespace DefaultCpu
             this.value = read();
         }
 
+        /// <summary>
+        /// Reads this Address.
+        /// </summary>
+        /// <returns></returns>
         internal ushort read()
         {
             switch (aType)
@@ -90,6 +97,10 @@ namespace DefaultCpu
             }
         }
 
+        /// <summary>
+        /// Writes the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
         internal void write(ushort value)
         {
             switch (aType)

@@ -2,6 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dcpuEmulator", "dcpuEmulator\dcpuEmulator.csproj", "{BE93838D-7AE1-4B6F-96F9-D74B65C6A26D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5D075B81-E644-49D9-9D17-1950C6DD857F} = {5D075B81-E644-49D9-9D17-1950C6DD857F}
+		{50DB40B2-D1B2-4208-807E-72CEB12B534F} = {50DB40B2-D1B2-4208-807E-72CEB12B534F}
+		{A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E} = {A4E3A4BE-1C80-49B5-AAD7-02C33B60B55E}
+		{91A092C2-9C3E-4FA1-BBEA-E48DF1F48AE7} = {91A092C2-9C3E-4FA1-BBEA-E48DF1F48AE7}
+		{45840BCD-3FC5-4580-B097-2DB3A2EBB5E7} = {45840BCD-3FC5-4580-B097-2DB3A2EBB5E7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInterface", "PluginInterface\PluginInterface.csproj", "{44B10CA0-DEDE-491F-8963-4F58F172C871}"
 EndProject
@@ -52,8 +59,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

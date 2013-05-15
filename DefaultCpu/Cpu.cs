@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using PluginInterface;
 
 namespace DefaultCpu
 {
+    /// <summary>
+    /// The cpu emulator
+    /// </summary>
     public class Cpu
     {
         internal static IPluginHost computer;
@@ -23,13 +22,28 @@ namespace DefaultCpu
 
         internal bool skipNext, pauseInterrupt;
 
-        internal readonly Queue<ushort> interruptQueue = new Queue<ushort>(); 
+        /// <summary>
+        /// The interrupt queue
+        /// </summary>
+        internal readonly Queue<ushort> interruptQueue = new Queue<ushort>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cpu"/> class
+        /// </summary>
+        /// <param name="computer">The emulator host</param>
         public Cpu(IPluginHost computer)
         {
             Cpu.computer = computer;
         }
 
+        /// <summary>
+        /// Executes the next instruction
+        /// </summary>
+        /// <exception cref="System.NotImplementedException">
+        /// Opcode not supported
+        /// or
+        /// Special Opcode not supported
+        /// </exception>
         public void step()
         {
             nextSP = SP;
@@ -37,12 +51,13 @@ namespace DefaultCpu
 
             var instr = new Instruction(computer.readMem(PC));
 
+            //If we have a regular OPCode
             if (instr.opCode != OPCode.SPECIAL)
             {
                 if(skipNext)
                 {
                     skipNext = false;
-                    // Skip reading next words 
+                    // Skip reading next words //TODO: Get working
                     //if ((instr.b.rawValue >= 0x10 && instr.b.rawValue < 0x18) || instr.b.rawValue == 0x1a || instr.b.rawValue == 0x1e || instr.b.rawValue == 0x1f) // [register + next word], [SP + next word], [next word], next word
                         //nextPC++;
                     //if ((instr.a.rawValue >= 0x10 && instr.a.rawValue < 0x18) || instr.a.rawValue == 0x1a || instr.a.rawValue == 0x1e || instr.a.rawValue == 0x1f) // [register + next word], [SP + next word], [next word], next word
@@ -50,6 +65,7 @@ namespace DefaultCpu
 
                     PC = nextPC;
 
+                    //If the opcode is larger than 0x10 and smaller than 0x17, skip the next opcode and add a cycle
                     if (instr.opCode >= (OPCode)0x10 && instr.opCode <= (OPCode)0x17)
                     {
                         skipNext = true;
@@ -58,6 +74,7 @@ namespace DefaultCpu
                     return;
                 }
                 int result = 0;
+                //Switch over opcode
                 switch (instr.opCode)
                 {
                     case OPCode.SET:
@@ -203,7 +220,7 @@ namespace DefaultCpu
                         cycles += 2;
                         break;
                     default:
-                        throw new NotImplementedException("Opcode not supported");
+                        throw new NotImplementedException("Opcode not supported"); //The opcode was not on the list, throw exception
                 }
             }
             else
@@ -220,7 +237,7 @@ namespace DefaultCpu
                         cycles += 3;
                         break;
                     case SpecialOPCode.INT:
-                        //Something about triggering a sofware interrupt or whatever
+                        //TODO: Something about triggering a sofware interrupt or whatever
                         cycles += 4;
                         break;
                     case SpecialOPCode.IAG:
@@ -275,14 +292,20 @@ namespace DefaultCpu
                 }
             }
 
+            //If theres items in the interruptQueue, and we are not pausing interrupts
             if(interruptQueue.Count != 0 && !pauseInterrupt)
             {
                 if(IA != 0)
                 {
+                    //Stop interrupts
                     pauseInterrupt = true;
+                    //Push the current PC
                     push(PC);
+                    //Push the current a register
                     push(register.A);
+                    //Set the next PC location to IA
                     nextPC = IA;
+                    //Get the interrupt message and pop it
                     register.A = interruptQueue.Dequeue();
                 }
             }
@@ -291,21 +314,39 @@ namespace DefaultCpu
             SP = nextSP;
         }
 
+        /// <summary>
+        /// Pushes the specified value to the stack
+        /// </summary>
+        /// <param name="value">The value</param>
         internal void push(ushort value)
         {
+            //Push to the stack
             computer.writeMem(--nextSP, value);
         }
 
+        /// <summary>
+        /// Pops a value from the stack
+        /// </summary>
+        /// <returns>The value</returns>
         internal ushort pop()
         {
+            //Pop from the stack
             return computer.readMem(nextSP++);
         }
 
+        /// <summary>
+        /// Gets the registers
+        /// </summary>
+        /// <returns>Registers</returns>
         public Register getRegisters()
         {
             return register;
         }
 
+        /// <summary>
+        /// Gets the special registers
+        /// </summary>
+        /// <returns>The special registers</returns>
         public ushort[] getSpecialRegisters()
         {
             return new[]

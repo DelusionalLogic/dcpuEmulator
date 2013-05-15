@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DefaultCpu
+﻿namespace DefaultCpu
 {
+    /// <summary>
+    /// Enum for all possible opcodes
+    /// </summary>
     public enum OPCode
     {
         SPECIAL = 0x00,
@@ -40,6 +37,9 @@ namespace DefaultCpu
         STD = 0x1F,
     }
 
+    /// <summary>
+    /// Enum for all possible special opcodes
+    /// </summary>
     public enum SpecialOPCode
     {
         JSR = 0x01,

@@ -19,7 +19,7 @@
       <PdhCountersEnabled>false</PdhCountersEnabled>
       <PdhCountersRate>500</PdhCountersRate>
       <PdhCounters>
-        <PdhCounter>\Fysisk disk(_Total)\Gennemsnitsl&amp;amp;amp;#230;ngde af diskk&amp;amp;amp;#248;</PdhCounter>
+        <PdhCounter>\Fysisk disk(_Total)\Gennemsnitsl&amp;amp;amp;amp;amp;#230;ngde af diskk&amp;amp;amp;amp;amp;#248;</PdhCounter>
         <PdhCounter>\Hukommelse\Sider pr. sekund</PdhCounter>
         <PdhCounter>\Processor(_Total)\% Processortid</PdhCounter>
       </PdhCounters>
@@ -70,6 +70,9 @@
   <Reports>
     <Report>
       <Path>dcpuEmulator121118(1).vsp</Path>
+    </Report>
+    <Report>
+      <Path>dcpuEmulator130515.vsp</Path>
     </Report>
   </Reports>
   <Launches>

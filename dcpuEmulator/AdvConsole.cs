@@ -1,23 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dcpuEmulator
 {
+    /// <summary>
+    /// Provides advanced fatures to the default system console
+    /// </summary>
     class AdvConsole
     {
 
-        private static int fromTop = 0;
+        private static int _fromTop;
 
         private static int _logLevel = 20;
+
+        /// <summary>
+        /// The current minimum level to log
+        /// </summary>
+        /// <value>
+        /// The log level.
+        /// </value>
         public static int logLevel
         {
             get { return _logLevel; }
             set { _logLevel = value; }
         }
 
+        /// <summary>
+        /// Clear the currently selected line
+        /// </summary>
         private static void clearLine()
         {
             Console.CursorLeft = 0;
@@ -34,12 +43,12 @@ namespace dcpuEmulator
         /// <param name="background">Background color</param>
         public static void Write(string message, ConsoleColor foreground = ConsoleColor.Gray, ConsoleColor background = ConsoleColor.Black)
         {
-            Console.SetCursorPosition(0, fromTop);
+            Console.SetCursorPosition(0, _fromTop);
             clearLine();
             Console.BackgroundColor = background;
             Console.ForegroundColor = foreground;
             Console.WriteLine(message);
-            fromTop = Console.CursorTop;
+            _fromTop = Console.CursorTop;
             drawInput("Running");
         }
 
@@ -123,7 +132,7 @@ namespace dcpuEmulator
         public static void Clear()
         {
             Console.Clear();
-            fromTop = 0;
+            _fromTop = 0;
         }
 
         /// <summary>
