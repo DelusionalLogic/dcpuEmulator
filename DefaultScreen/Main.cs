@@ -5,6 +5,9 @@ using PluginInterface;
 
 namespace DefaultScreen
 {
+    /// <summary>
+    /// The plugin interface
+    /// </summary>
     public class Main : IHardware
     {
         public IPluginHost Host { get; set; }
@@ -25,6 +28,7 @@ namespace DefaultScreen
         [STAThread]
         private void openGui()
         {
+            //Open the screen gui
             screen = new ScreenGui(Host);
             Application.Run(screen);
         }
@@ -58,7 +62,7 @@ namespace DefaultScreen
 
         public string Version
         {
-            get { return "0.0"; }
+            get { return "0.9"; }
         }
 
         public uint ID { get { return 0x7349f615; } }

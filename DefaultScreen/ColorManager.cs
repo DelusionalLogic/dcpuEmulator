@@ -2,28 +2,41 @@
 
 namespace DefaultScreen
 {
+    /// <summary>
+    /// Manages the color palette
+    /// </summary>
     internal class ColorManager
     {
-        private static ushort address = 0;
+        /// <summary>
+        /// The address of the palette, 0 for default
+        /// </summary>
+        private static ushort _address = 0;
 
+        /// <summary>
+        /// Get the color of the id
+        /// </summary>
+        /// <param name="id">The id of the color in the palet</param>
+        /// <returns>The color at the position</returns>
         internal static Color getColor(int id)
         {
-            ushort color;
-            if(address == 0)
-                color = DefaultColor[id];
-            else
-            {
-                color = ScreenGui.computer.readMem(address + id);
-            }
+            ushort color = _address == 0 ? DefaultColor[id] : ScreenGui.computer.readMem(_address + id);
 
             return Color.FromArgb(((color >> 8) & 0xF) * 17, ((color >> 4) & 0xF) * 17, (color & 0xF) * 17);
         }
 
+        /// <summary>
+        /// Set the palette address
+        /// </summary>
+        /// <param name="newAddress">The new address</param>
         internal static void mapPalette(ushort newAddress)
         {
-            address = newAddress;
+            _address = newAddress;
         }
 
+        /// <summary>
+        /// Dumps the palette to the memory
+        /// </summary>
+        /// <param name="address">The address</param>
         internal static void dumpPalette(ushort address)
         {
             foreach (var color in DefaultColor)
@@ -32,6 +45,9 @@ namespace DefaultScreen
             }
         }
 
+        /// <summary>
+        /// The default palette
+        /// </summary>
         private static readonly ushort[] DefaultColor = new ushort[]
                                     {
                                         0x0000,

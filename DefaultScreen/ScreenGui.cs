@@ -4,25 +4,45 @@ using PluginInterface;
 
 namespace DefaultScreen
 {
+    /// <summary>
+    /// The gui of the screen
+    /// </summary>
     public partial class ScreenGui : Form
     {
+        /// <summary>
+        /// The emulator host
+        /// </summary>
         public static IPluginHost computer;
 
-        private Character[] characters;
+        //The memory address to map the screen to
         private int memMap = 0;
 
+        //The charaters on the screen
+        private readonly Character[] characters;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScreenGui"/> class
+        /// </summary>
+        /// <param name="computer">The emulator host</param>
         public ScreenGui(IPluginHost computer)
         {
             ScreenGui.computer = computer;
             characters = new Character[384]; // Screensize
             for (int i = 0; i < characters.Length; i++)
             {
+                //Initialize the charaters with empty black ones
                 characters[i] = new Character(70, 0, 0xE, false);
             }
+            //Create the first screen
             ScreenFactory.createScreen(characters);
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Interrupt the screen
+        /// </summary>
+        /// <param name="registers">The registers at the time of the interrupt</param>
+        /// <returns>The modified registers</returns>
         public ushort[] interrupt(ushort[] registers)
         {
             switch (registers[0]) // register A

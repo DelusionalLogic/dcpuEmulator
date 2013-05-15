@@ -1,24 +1,45 @@
 ﻿namespace DefaultScreen
 {
+    /// <summary>
+    /// Controls the screen font
+    /// </summary>
     internal class FontManager
     {
-        private static ushort address = 0;
+        /// <summary>
+        /// The address of the font, 0 for default
+        /// </summary>
+        private static ushort _address = 0;
 
+        /// <summary>
+        /// Get the charater in the font position
+        /// </summary>
+        /// <param name="id">The position</param>
+        /// <returns>The charater in the font at the position</returns>
         internal static uint getChar(ushort id)
         {
-            if(address == 0)
+            //If using the defualt font get it from there
+            if(_address == 0)
                 return DefaultFont[id];
-            uint font = 0;
-            font = ScreenGui.computer.readMem(address + id);
-            font = (font << 16) + ScreenGui.computer.readMem(address + id + 1);
+
+            //Read the address to get the font
+            uint font = ScreenGui.computer.readMem(_address + id);
+            font = (font << 16) + ScreenGui.computer.readMem(_address + id + 1);
             return font;
         }
 
+        /// <summary>
+        /// Set the address of the font
+        /// </summary>
+        /// <param name="newAddress">The new address of the font</param>
         internal static void mapFont(ushort newAddress)
         {
-            address = newAddress;
+            _address = newAddress;
         }
 
+        /// <summary>
+        /// Dump the default font to memory
+        /// </summary>
+        /// <param name="address">The address of the dump</param>
         internal static void dumpFont(ushort address)
         {
             foreach (var letter in DefaultFont)
